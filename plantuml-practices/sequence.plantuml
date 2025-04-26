@@ -1,0 +1,56 @@
+@startuml ttt
+actor User
+box "Client"
+participant "Browser" as B
+end box
+box Server
+participant "Rest Server" as RS
+database "Database" as DB
+collections "Config" as C
+end box
+
+== User Accesses the Application ==
+User -> B : access http://localhost:8080
+B -> RS : GET /api/v1/hello
+
+== Rest Server Initialize ==
+RS -> C : GET /api/v1/config
+C --> RS : { "hello": "world" }
+RS -> DB : SELECT * FROM hello
+DB --> RS : hello
+
+== Rest Server Process Request ==
+loop rows
+    RS -> DB : SELECT * FROM hello
+    DB --> RS : hello
+end loop
+
+alt error
+    RS -> DB : SELECT * FROM hello
+    DB --> RS : hello
+else Warning
+    RS -> DB : SELECT * FROM hello
+    DB --> RS : hello
+else info
+    RS -> DB : SELECT * FROM hello
+    DB --> RS : hello
+else success
+    RS -> B : 200 OK
+end else
+
+opt error
+    RS -> B : 500 Internal Server Error
+    note right of B #FFAAAA
+        Error: 500 Internal Server Error
+    end note
+    note left of B #11FFAA
+        Error: 500 Internal Server Error
+    end note
+    B --> User : html
+end opt
+
+== Response to User ==
+B --> User : html
+
+
+@enduml
