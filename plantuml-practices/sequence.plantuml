@@ -7,6 +7,7 @@ box Server
 participant "Rest Server" as RS
 database "Database" as DB
 collections "Config" as C
+entity "Entity" as E
 end box
 
 == User Accesses the Application ==
@@ -18,6 +19,11 @@ RS -> C : GET /api/v1/config
 C --> RS : { "hello": "world" }
 RS -> DB : SELECT * FROM hello
 DB --> RS : hello
+
+group Access Entity
+    RS -> E : GET /api/v1/hello
+    E --> RS : hello
+end group
 
 == Rest Server Process Request ==
 loop rows
