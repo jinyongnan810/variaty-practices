@@ -2,6 +2,9 @@ from flask import Flask
 from flask import request
 from flask import render_template
 
+import threading
+import time
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -40,3 +43,17 @@ def hello_json(name=None):
 def add_name():
     name = request.json.get('name')
     return {"name": name}, 201
+
+lock = threading.Lock()
+
+@app.route('/process')
+def process():
+    if not lock.acquire(blocking=False):
+        return {'status': 'busy', 'message': 'Another request is currently being processed'}, 429
+
+    try:
+        # Simulate long-running task
+        time.sleep(5)
+        return {'status': 'success', 'message': 'Processing complete'}
+    finally:
+        lock.release()
