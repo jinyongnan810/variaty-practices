@@ -6,22 +6,18 @@ RUN apt-get update && \
     pip install --upgrade pip
 
 # Copy code
+COPY ./app /app
+COPY nginx.conf /etc/nginx/nginx.conf
+
 WORKDIR /app
-COPY app /app
-COPY requirements.txt .
 RUN pip install -r requirements.txt
-
-# uWSGI config
-COPY uwsgi.ini .
-
-# Nginx config
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Start script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
 
 # Expose ports
 EXPOSE 80
 
-CMD ["/start.sh"]
+# Add entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
