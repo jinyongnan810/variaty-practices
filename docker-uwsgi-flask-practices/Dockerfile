@@ -2,15 +2,22 @@ FROM python:3.12-slim
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y nginx build-essential python3-dev && \
+    apt-get install -y nginx curl build-essential python3-dev && \
     pip install --upgrade pip
+
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    ln -s /root/.local/bin/poetry /usr/local/bin/poetry
+ENV PATH="/root/.local/bin:$PATH"
+ENV POETRY_VIRTUALENVS_CREATE=false
 
 # Copy code
 COPY ./app /app
 COPY nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /app
-RUN pip install -r requirements.txt
+COPY pyproject.toml .
+RUN poetry install --no-root
 
 # Expose ports
 EXPOSE 80
