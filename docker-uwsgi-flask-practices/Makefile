@@ -14,7 +14,7 @@ clear:
 	docker-compose down --volumes --remove-orphans --rmi all
 
 test:
-	poetry run pytest
+	poetry run pytest -s
 
 flask:
 	./run_flask.sh
