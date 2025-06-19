@@ -47,7 +47,10 @@ end else
 opt error
     RS -> B : 500 Internal Server Error
     note right of B #FFAAAA
-        Error: 500 Internal Server Error
+        |= col1 |= col2 |= col3 |
+        | hello | hello2 | hello3 |
+        | hello | hello2 | hello3 |
+         
     end note
     note left of B #11FFAA
         Error: 500 Internal Server Error
