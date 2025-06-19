@@ -10,4 +10,4 @@ def client():
 def test_api_endpoint(client):
     response = client.get("/api")
     assert response.status_code == 200
-    assert response.json == {"message": "Hello from Flask + uWSGI + Nginx!", "key": os.getenv("API_KEY")}
+    assert response.json == {"message": "Hello from Flask + uWSGI + Nginx!", "key": 'test_api_key'}
