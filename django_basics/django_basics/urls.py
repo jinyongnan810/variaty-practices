@@ -17,7 +17,26 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from .views import book_list, BookListCreateAPIView, BookRetrieveUpdateDestroyAPIView
+from .views import (
+    book_list,
+    BookListCreateAPIView,
+    BookRetrieveUpdateDestroyAPIView,
+    redoc_view,
+)
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Book API",
+        default_version="v1",
+        description="API documentation for Book model",
+        contact=openapi.Contact(email="you@example.com"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,4 +47,18 @@ urlpatterns = [
         BookRetrieveUpdateDestroyAPIView.as_view(),
         name="book-detail",
     ),
+    # Swagger and ReDoc
+    path(
+        "swagger",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    # path("redoc", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path("redoc", redoc_view, name="custom-redoc"),
+    path(
+        "swagger.json", schema_view.without_ui(cache_timeout=0), name="schema-json"
+    ),  # serves JSON
+    path(
+        "swagger.yaml", schema_view.without_ui(cache_timeout=0), name="schema-yaml"
+    ),  # serves YAML
 ]

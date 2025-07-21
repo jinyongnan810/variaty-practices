@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "django_basics",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,8 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "URL_TRAILING_SLASH": False,  # 👈 Add this to disable redirect
 }
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",  # ✅ Required
+]
