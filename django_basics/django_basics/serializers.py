@@ -17,6 +17,12 @@ class BookSerializer(serializers.ModelSerializer):
                 "Book name and author cannot be the same."
             )
 
+        # check db for existing book with same title and author
+        if Book.objects.filter(title=title, author=author).exists():
+            raise serializers.ValidationError(
+                "A book with this title and author already exists."
+            )
+
         return data
 
     def validate_author(self, value):
