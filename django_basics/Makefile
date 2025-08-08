@@ -5,3 +5,6 @@ migrate:
 
 start:
 	python manage.py runserver
+
+poetry:
+	eval $(poetry env activate)
