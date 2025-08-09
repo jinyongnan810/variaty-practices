@@ -1,5 +1,6 @@
-from datetime import datetime, timedelta, timezone
 import time
+from datetime import datetime, timedelta, timezone
+
 import pytest
 
 JST = timezone(timedelta(hours=+9), "JST")

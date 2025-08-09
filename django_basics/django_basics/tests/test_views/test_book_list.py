@@ -1,4 +1,5 @@
 from typing import Final
+
 import pytest
 from rest_framework.test import APIClient
 
