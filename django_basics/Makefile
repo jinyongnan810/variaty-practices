@@ -14,3 +14,6 @@ lint:
 	poetry run black .
 	poetry run flake8 django_basics
 	poetry run mypy django_basics 
+
+test:
+	poetry run pytest -s --cov=django_basics --cov-report=html
