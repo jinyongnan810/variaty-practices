@@ -24,7 +24,35 @@ pytest-freezegun = "^0.4.2"
 requests-mock = "^1.12.1"
 django-stubs = "^5.2.2"
 djangorestframework-stubs = "^3.16.1"
+isort = "^6.0.1"
+flake8 = "^7.3.0"
+black = "^25.1.0"
+mypy = "^1.17.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+exclude = '''
+(
+    migrations
+    | manage.py
+    | .mypy_cache
+    | .venv
+)
+'''
+
+[tool.isort]
+include_trailing_comma = true
+line_length = 100
+multi_line_output = 5
+skip_glob = [".venv/*", "*/migrations/*"]
+
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "django_basics.settings"
+python_files = ["test_*.py", "*_test.py"]

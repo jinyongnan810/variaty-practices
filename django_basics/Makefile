@@ -6,5 +6,11 @@ migrate:
 start:
 	python manage.py runserver
 
-poetry:
+activate:
 	eval $(poetry env activate)
+
+lint:
+	poetry run isort .
+	poetry run black .
+	poetry run flake8 django_basics
+	poetry run mypy django_basics 
