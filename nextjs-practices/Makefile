@@ -1,8 +1,14 @@
 test:
 	npx playwright test
 
-test-headed:
+headed:
 	npx playwright test --headed
+
+ui:
+	npx playwright test --ui
 
 report:
 	npx playwright show-report
+
+update:
+	npm install -D @playwright/test@latest && npx playwright install --with-deps
