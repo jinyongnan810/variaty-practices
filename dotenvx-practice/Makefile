@@ -14,13 +14,13 @@ set-env:
 	dotenvx set $(KEY) $(VALUE) -f .env.prod
 
 local:
-	dotenvx run -f .env -- python manage.py runserver
+	python manage.py runserver
 
 dev:
-	dotenvx run -f .env.dev -- python manage.py runserver
+	python manage.py runserver
 
 stg:
-	dotenvx run -f .env.stg -- python manage.py runserver
+	python manage.py runserver
 
 prod:
-	dotenvx run -f .env.prod -- python manage.py runserver
+	python manage.py runserver
