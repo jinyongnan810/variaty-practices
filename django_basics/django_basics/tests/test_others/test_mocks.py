@@ -31,6 +31,34 @@ def assert_log(caplog):
     return __assert_log
 
 
+@pytest.fixture
+def mock_another_function(mocker):
+    def get_response(message, date):
+        if message == "test message" and date == "2024-12-31":
+            return "hello"
+        else:
+            return "bye"
+
+    return mocker.patch(
+        "django_basics.tests.dummy_functions.dummy.another_function",
+        side_effect=get_response,
+    )
+
+
+@pytest.fixture
+def mock_another_functio_with_different_responses(mocker):
+    with patch(
+        "django_basics.tests.dummy_functions.dummy.another_function",
+        side_effect=[
+            "first call",
+            "second call",
+            Exception("mocked exception"),
+            "fourth call",
+        ],
+    ) as mock_func:
+        yield mock_func
+
+
 class TestMocks:
     def test_successful_api_call_with_requests_mock(self, requests_mock, assert_log):
         """Test that a successful API call returns expected response and logs correctly.
@@ -96,6 +124,16 @@ class TestMocks:
         assert result == {"title": "first", "body": "one", "userId": 1, "id": 1}
         # assert requests
         assert req_mock.call_count == 1
+        call_args = req_mock.last_request
+        assert call_args.method == "POST"
+        assert call_args.url == "https://jsonplaceholder.typicode.com/posts"
+        assert call_args.headers["Content-Type"] == "application/json"
+        assert call_args.headers["Accept"] == "application/json"
+        assert call_args.json() == {
+            "title": "foo",
+            "body": "bar",
+            "userId": 1,
+        }
         assert_log(logging.INFO, "Response status code: 200")
 
         with pytest.raises(requests.exceptions.HTTPError):
@@ -165,6 +203,8 @@ class TestMocks:
         result = call_another_function()
         assert result == "mocked value"
         assert mock_another_function.call_count == 1
+        call_args = mock_another_function.call_args
+        assert call_args.args == ("hi there", "2024-10-01")
 
     @patch("django_basics.tests.dummy_functions.dummy.another_function")
     def test_mock_function_with_side_effect_returning_different_values(
@@ -209,3 +249,44 @@ class TestMocks:
         )
         with pytest.raises(Exception, match="Mocked exception"):
             call_another_function()
+
+    def test_mock_function_with_different_arguments(self, mock_another_function):
+        """Test mocking a function and verifying calls with different arguments.
+        Demonstrates that the mocked function returns different values based
+        on the input arguments and verifies the call arguments.
+        """
+        result = call_another_function()
+        assert result == "bye"
+        assert mock_another_function.call_count == 1
+        call_args = mock_another_function.call_args
+        assert call_args.args == ("hi there", "2024-10-01")
+
+        result = call_another_function(message="test message", date="2024-12-31")
+        assert result == "hello"
+        assert mock_another_function.call_count == 2
+        call_args = mock_another_function.call_args
+        assert call_args.args == ("test message", "2024-12-31")
+
+    def test_mock_function_with_different_responses_on_consecutive_calls(
+        self, mock_another_functio_with_different_responses
+    ):
+        """Test mocking a function to return different responses on consecutive calls.
+
+        Demonstrates using side_effect with a list of return values/exceptions
+        to simulate different behaviors on each call.
+        """
+        result = call_another_function()
+        assert result == "first call"
+        assert mock_another_functio_with_different_responses.call_count == 1
+
+        result = call_another_function()
+        assert result == "second call"
+        assert mock_another_functio_with_different_responses.call_count == 2
+
+        with pytest.raises(Exception, match="mocked exception"):
+            call_another_function()
+        assert mock_another_functio_with_different_responses.call_count == 3
+
+        result = call_another_function()
+        assert result == "fourth call"
+        assert mock_another_functio_with_different_responses.call_count == 4

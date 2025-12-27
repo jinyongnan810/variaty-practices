@@ -7,12 +7,12 @@ from django_basics.tests.dummy_functions.other_dummy import another_function
 logger = logging.getLogger(__name__)
 
 
-def some_function_that_calls_api():
+def some_function_that_calls_api(user_id: int = 1) -> dict:
     header = {"Content-Type": "application/json", "Accept": "application/json"}
     body = {
         "title": "foo",
         "body": "bar",
-        "userId": 1,
+        "userId": user_id,
     }
     try:
         response = requests.post(
@@ -29,6 +29,6 @@ def some_function_that_calls_api():
         raise
 
 
-def call_another_function():
+def call_another_function(message: str = "hi there", date: str = "2024-10-01") -> str:
 
-    return another_function()
+    return another_function(message, date)
