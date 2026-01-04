@@ -181,6 +181,22 @@ Bash scripting utilities:
 
 ---
 
+### [MCP Practices](mcp-practices)
+
+**Tech Stack:** [Model Context Protocol](https://modelcontextprotocol.io/) · [Supabase MCP](https://github.com/supabase/mcp-server) · [GitHub MCP](https://github.com/modelcontextprotocol/servers/tree/main/src/github) · [direnv](https://github.com/direnv/direnv)
+
+Model Context Protocol (MCP) server integration examples:
+
+- MCP server configuration with `.mcp.json`
+- Supabase MCP server integration (HTTP-based)
+- GitHub MCP server integration (command-based)
+- Environment management with [direnv](https://direnv.net/)
+- Secure credential handling patterns
+
+**Key Learnings:** MCP server setup, external service integration, environment-based configuration
+
+---
+
 ## 📐 Documentation & Design
 
 ### [PlantUML Practices](plantuml-practices)
@@ -293,8 +309,8 @@ jupyter notebook
 | **Frontend** | Next.js, React, TypeScript, Tailwind CSS             |
 | **Testing**  | pytest, Jest, Playwright, requests-mock, pytest-mock |
 | **Data**     | Pandas, Polars, Matplotlib, Jupyter                  |
-| **DevOps**   | Docker, Docker Compose, Nginx, Poetry                |
-| **Tools**    | dotenvx, PlantUML, jsonschema, Pydantic, fasteners   |
+| **DevOps**   | Docker, Docker Compose, Nginx, Poetry, direnv        |
+| **Tools**    | dotenvx, PlantUML, jsonschema, Pydantic, fasteners, MCP |
 | **Quality**  | ESLint, mypy, black, flake8, isort, pytest-cov       |
 
 ---

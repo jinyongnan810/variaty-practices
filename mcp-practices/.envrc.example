@@ -1,0 +1,2 @@
+export GITHUB_TOKEN="github_pat_xxx"
+export SUPABASE_URL="https://mcp.supabase.com/mcp?project_ref=xxx"
