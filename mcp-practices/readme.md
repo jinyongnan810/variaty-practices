@@ -8,6 +8,7 @@ Practice project for [Model Context Protocol (MCP)](https://modelcontextprotocol
 - **Claude Code** - Anthropic's CLI tool
 - **direnv** - Automatic environment variable loading
 - **npx** - Node package executor
+- **uvx** - Python package executor (uv)
 
 ## Key Practices
 
@@ -25,6 +26,14 @@ Practice project for [Model Context Protocol (MCP)](https://modelcontextprotocol
       "env": {
         "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       }
+    },
+    "awslabs.aws-documentation-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_DOCUMENTATION_PARTITION": "aws"
+      }
     }
   }
 }
@@ -35,7 +44,7 @@ Practice project for [Model Context Protocol (MCP)](https://modelcontextprotocol
 | Type | Description |
 |------|-------------|
 | `http` | HTTP-based MCP server (like Supabase) |
-| `command` | Local command execution (npx, python, etc.) |
+| `command` | Local command execution (npx, uvx, python, etc.) |
 
 ## Available MCP Servers
 
@@ -52,6 +61,11 @@ Practice project for [Model Context Protocol (MCP)](https://modelcontextprotocol
 claude mcp add documents -- npx -y @modelcontextprotocol/server-filesystem /Users/kin/Documents
 # Prompt like: show all the python files in /path/to/folder
 ```
+
+### AWS Documentation
+- add `uv` with `curl -LsSf https://astral.sh/uv/install.sh | sh`
+- Provides access to AWS documentation via MCP
+- Prompt like: "explain how S3 bucket policies work" or "show me Lambda concurrency limits"
 
 ## Tips
 
