@@ -21,6 +21,10 @@
       },
       "disabled": false,
       "autoApprove": []
+    },
+    "apple-docs": {
+      "command": "npx",
+      "args": ["apple-doc-mcp-server@latest"]
     }
   }
 }

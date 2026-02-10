@@ -34,6 +34,10 @@ Practice project for [Model Context Protocol (MCP)](https://modelcontextprotocol
         "FASTMCP_LOG_LEVEL": "ERROR",
         "AWS_DOCUMENTATION_PARTITION": "aws"
       }
+    },
+    "apple-docs": {
+      "command": "npx",
+      "args": ["apple-doc-mcp-server@latest"]
     }
   }
 }
@@ -66,6 +70,10 @@ claude mcp add documents -- npx -y @modelcontextprotocol/server-filesystem /User
 - add `uv` with `curl -LsSf https://astral.sh/uv/install.sh | sh`
 - Provides access to AWS documentation via MCP
 - Prompt like: "explain how S3 bucket policies work" or "show me Lambda concurrency limits"
+
+### Apple Docs
+- Provides access to Apple developer documentation via MCP
+- Prompt like: "explain how SwiftUI NavigationStack works" or "Please search apple docs for liquid glass button"
 
 ## Tips
 
