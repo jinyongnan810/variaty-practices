@@ -22,4 +22,5 @@ claude
 /kiro:spec-impl personal-wiki-knowledge-base 1
 /kiro:spec-impl personal-wiki-knowledge-base 2
 /kiro:spec-impl personal-wiki-knowledge-base 3
+/kiro:spec-impl personal-wiki-knowledge-base 4
 ```

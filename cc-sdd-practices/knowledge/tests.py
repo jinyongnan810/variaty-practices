@@ -1,7 +1,11 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.test import TestCase
 from django.utils import timezone
+
+from rest_framework import status
+from rest_framework.test import APIClient
 
 from knowledge.models import KnowledgeEntry, Tag
 from knowledge.serializers import KnowledgeSerializer, TagSerializer
@@ -266,3 +270,151 @@ class KnowledgeSerializerTest(TestCase):
         serializer = KnowledgeSerializer(entry)
         self.assertIsNotNone(serializer.data["created_at"])
         self.assertIsNotNone(serializer.data["updated_at"])
+
+
+class KnowledgeViewSetTest(TestCase):
+    """Test KnowledgeViewSet CRUD, search, and filtering."""
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username="testuser", password="testpass")
+        self.client.force_authenticate(user=self.user)
+
+    def test_create_entry(self):
+        data = {"title": "New Entry", "body": "Content", "tags": ["python"]}
+        response = self.client.post("/api/knowledge/", data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["title"], "New Entry")
+
+    def test_list_entries(self):
+        KnowledgeEntry.objects.create(title="Entry 1", body="Body 1")
+        KnowledgeEntry.objects.create(title="Entry 2", body="Body 2")
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("results", response.data)
+        self.assertEqual(len(response.data["results"]), 2)
+
+    def test_retrieve_entry(self):
+        entry = KnowledgeEntry.objects.create(title="Detail", body="Body")
+        response = self.client.get(f"/api/knowledge/{entry.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "Detail")
+
+    def test_update_entry(self):
+        entry = KnowledgeEntry.objects.create(title="Old", body="Old body")
+        data = {"title": "Updated", "body": "New body"}
+        response = self.client.put(f"/api/knowledge/{entry.id}/", data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "Updated")
+
+    def test_partial_update_entry(self):
+        entry = KnowledgeEntry.objects.create(title="Original", body="Body")
+        response = self.client.patch(
+            f"/api/knowledge/{entry.id}/", {"title": "Patched"}, format="json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "Patched")
+        self.assertEqual(response.data["body"], "Body")
+
+    def test_delete_entry(self):
+        entry = KnowledgeEntry.objects.create(title="ToDelete", body="Body")
+        response = self.client.delete(f"/api/knowledge/{entry.id}/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(KnowledgeEntry.objects.filter(id=entry.id).exists())
+
+    def test_404_for_nonexistent_entry(self):
+        response = self.client.get("/api/knowledge/99999/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_search_by_title(self):
+        KnowledgeEntry.objects.create(title="Django Guide", body="content")
+        KnowledgeEntry.objects.create(title="Flask Guide", body="content")
+        response = self.client.get("/api/knowledge/", {"search": "Django"})
+        self.assertEqual(len(response.data["results"]), 1)
+        self.assertEqual(response.data["results"][0]["title"], "Django Guide")
+
+    def test_search_by_body(self):
+        KnowledgeEntry.objects.create(title="Entry", body="Learn about Python basics")
+        KnowledgeEntry.objects.create(title="Other", body="Learn about Rust basics")
+        response = self.client.get("/api/knowledge/", {"search": "Python"})
+        self.assertEqual(len(response.data["results"]), 1)
+
+    def test_search_case_insensitive(self):
+        KnowledgeEntry.objects.create(title="DJANGO Tips", body="content")
+        response = self.client.get("/api/knowledge/", {"search": "django"})
+        self.assertEqual(len(response.data["results"]), 1)
+
+    def test_filter_by_tag_name(self):
+        tag = Tag.objects.create(name="python")
+        entry1 = KnowledgeEntry.objects.create(title="Tagged", body="body")
+        entry1.tags.add(tag)
+        KnowledgeEntry.objects.create(title="Untagged", body="body")
+        response = self.client.get("/api/knowledge/", {"tags__name": "python"})
+        self.assertEqual(len(response.data["results"]), 1)
+        self.assertEqual(response.data["results"][0]["title"], "Tagged")
+
+    def test_list_ordered_by_most_recently_updated(self):
+        e1 = KnowledgeEntry.objects.create(title="First", body="body")
+        e2 = KnowledgeEntry.objects.create(title="Second", body="body")
+        # Update e1 so it becomes most recently updated
+        e1.title = "First Updated"
+        e1.save()
+        response = self.client.get("/api/knowledge/")
+        titles = [r["title"] for r in response.data["results"]]
+        self.assertEqual(titles[0], "First Updated")
+        self.assertEqual(titles[1], "Second")
+
+
+class TagViewSetTest(TestCase):
+    """Test TagViewSet read-only list."""
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username="testuser", password="testpass")
+        self.client.force_authenticate(user=self.user)
+
+    def test_list_tags(self):
+        Tag.objects.create(name="python")
+        Tag.objects.create(name="django")
+        response = self.client.get("/api/tags/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        names = [t["name"] for t in response.data["results"]]
+        self.assertIn("python", names)
+        self.assertIn("django", names)
+
+    def test_tag_list_is_read_only(self):
+        response = self.client.post("/api/tags/", {"name": "new"}, format="json")
+        self.assertIn(response.status_code, [
+            status.HTTP_405_METHOD_NOT_ALLOWED,
+            status.HTTP_403_FORBIDDEN,
+        ])
+
+
+class URLRoutingTest(TestCase):
+    """Test URL routing is correctly wired."""
+
+    def test_token_obtain_endpoint_exists(self):
+        response = self.client.post(
+            "/api/token/",
+            {"username": "nonexistent", "password": "wrong"},
+            content_type="application/json",
+        )
+        # Should return 401 (bad credentials), not 404 (endpoint missing)
+        self.assertNotEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_token_refresh_endpoint_exists(self):
+        response = self.client.post(
+            "/api/token/refresh/",
+            {"refresh": "invalid"},
+            content_type="application/json",
+        )
+        self.assertNotEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_knowledge_endpoint_exists(self):
+        response = self.client.get("/api/knowledge/")
+        # 401 because unauthenticated, but not 404
+        self.assertNotEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_tags_endpoint_exists(self):
+        response = self.client.get("/api/tags/")
+        self.assertNotEqual(response.status_code, status.HTTP_404_NOT_FOUND)

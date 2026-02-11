@@ -24,8 +24,8 @@
   - Include created_at and updated_at timestamps in the serialized knowledge entry output
   - _Requirements: 1.1, 2.1, 2.2, 4.1, 4.2, 4.6, 6.2, 6.4_
 
-- [ ] 4. API endpoints and URL routing
-- [ ] 4.1 Create KnowledgeViewSet with CRUD, search, and filtering
+- [x] 4. API endpoints and URL routing
+- [x] 4.1 Create KnowledgeViewSet with CRUD, search, and filtering
   - Implement a model viewset that provides list, create, retrieve, update, partial update, and delete actions for knowledge entries
   - Configure keyword search across title and body fields using DRF SearchFilter with case-insensitive matching
   - Enable tag-based filtering on the list endpoint using DjangoFilterBackend so entries can be filtered by tag name
@@ -33,7 +33,7 @@
   - Ensure requests for non-existent entries return a 404 response
   - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [ ] 4.2 Create TagViewSet and wire all URL routing
+- [x] 4.2 Create TagViewSet and wire all URL routing
   - Implement a read-only viewset that lists all existing tags
   - Register both the knowledge and tag viewsets with a DRF router under the /api/ prefix
   - Add JWT token obtain and token refresh endpoints under /api/token/ without requiring authentication
