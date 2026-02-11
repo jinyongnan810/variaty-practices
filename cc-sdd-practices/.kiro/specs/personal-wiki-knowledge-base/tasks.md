@@ -40,8 +40,8 @@
   - Include the knowledge app URLs in the project root URL configuration
   - _Requirements: 3.4, 3.5, 4.3_
 
-- [ ] 5. Integration tests
-- [ ] 5.1 (P) Test CRUD lifecycle and data validation
+- [x] 5. Integration tests
+- [x] 5.1 (P) Test CRUD lifecycle and data validation
   - Verify creating a knowledge entry with title, body, and tags returns 201 with the correct response structure including nested tags and timestamps
   - Verify listing entries returns a paginated response ordered by most recently updated
   - Verify retrieving a single entry returns the full entry with raw Markdown body, tags, and timestamps
@@ -52,7 +52,7 @@
   - Verify Markdown content is stored and returned as raw text without any transformation
   - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 2.1, 2.2, 2.3, 6.1, 6.2, 6.3, 6.4_
 
-- [ ] 5.2 (P) Test authentication enforcement
+- [x] 5.2 (P) Test authentication enforcement
   - Verify requests to knowledge and tag endpoints without an Authorization header return 401
   - Verify requests with an invalid or malformed bearer token return 401
   - Verify obtaining a token with valid credentials returns access and refresh tokens
@@ -60,7 +60,7 @@
   - Verify authenticated requests with a valid bearer token succeed and return expected data
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-- [ ] 5.3 (P) Test tag management, search, and filtering
+- [x] 5.3 (P) Test tag management, search, and filtering
   - Verify tags are automatically created when new tag names are submitted with an entry
   - Verify multiple tags can be associated with a single entry and a single tag can appear on multiple entries
   - Verify the tag list endpoint returns all existing tags

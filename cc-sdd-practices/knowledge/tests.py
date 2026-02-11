@@ -418,3 +418,310 @@ class URLRoutingTest(TestCase):
     def test_tags_endpoint_exists(self):
         response = self.client.get("/api/tags/")
         self.assertNotEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+# =============================================================================
+# Integration Tests (Task 5)
+# =============================================================================
+
+
+class AuthenticatedAPITestCase(TestCase):
+    """Base class providing JWT-authenticated API client."""
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username="wikiuser", password="securepass123")
+        # Obtain JWT token via the actual endpoint
+        response = self.client.post(
+            "/api/token/",
+            {"username": "wikiuser", "password": "securepass123"},
+            format="json",
+        )
+        self.access_token = response.data["access"]
+        self.refresh_token = response.data["refresh"]
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {self.access_token}")
+
+
+class IntegrationCRUDTest(AuthenticatedAPITestCase):
+    """5.1 - Test CRUD lifecycle and data validation."""
+
+    def test_create_entry_returns_201_with_correct_structure(self):
+        data = {"title": "My Note", "body": "# Hello\n\nWorld", "tags": ["python", "notes"]}
+        response = self.client.post("/api/knowledge/", data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["title"], "My Note")
+        self.assertEqual(response.data["body"], "# Hello\n\nWorld")
+        self.assertEqual(len(response.data["tags"]), 2)
+        self.assertIn("id", response.data)
+        self.assertIn("created_at", response.data)
+        self.assertIn("updated_at", response.data)
+        # Tags should be nested objects
+        tag_names = [t["name"] for t in response.data["tags"]]
+        self.assertIn("python", tag_names)
+        self.assertIn("notes", tag_names)
+
+    def test_list_entries_returns_paginated_response(self):
+        KnowledgeEntry.objects.create(title="E1", body="b1")
+        KnowledgeEntry.objects.create(title="E2", body="b2")
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("count", response.data)
+        self.assertIn("next", response.data)
+        self.assertIn("previous", response.data)
+        self.assertIn("results", response.data)
+        self.assertEqual(response.data["count"], 2)
+
+    def test_list_entries_ordered_by_most_recently_updated(self):
+        e1 = KnowledgeEntry.objects.create(title="Older", body="body")
+        KnowledgeEntry.objects.create(title="Newer", body="body")
+        # Update e1 to make it most recent
+        e1.title = "Oldest Now Newest"
+        e1.save()
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response.data["results"][0]["title"], "Oldest Now Newest")
+
+    def test_retrieve_single_entry_with_full_data(self):
+        tag = Tag.objects.create(name="django")
+        entry = KnowledgeEntry.objects.create(
+            title="Django Guide", body="# Django\n\n**Great** framework"
+        )
+        entry.tags.add(tag)
+        response = self.client.get(f"/api/knowledge/{entry.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "Django Guide")
+        self.assertEqual(response.data["body"], "# Django\n\n**Great** framework")
+        self.assertEqual(len(response.data["tags"]), 1)
+        self.assertEqual(response.data["tags"][0]["name"], "django")
+        self.assertIn("created_at", response.data)
+        self.assertIn("updated_at", response.data)
+
+    def test_full_update_via_put(self):
+        entry = KnowledgeEntry.objects.create(title="Old", body="Old body")
+        data = {"title": "New Title", "body": "New body", "tags": ["updated"]}
+        response = self.client.put(f"/api/knowledge/{entry.id}/", data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "New Title")
+        self.assertEqual(response.data["body"], "New body")
+
+    def test_partial_update_via_patch(self):
+        entry = KnowledgeEntry.objects.create(title="Original", body="Keep this")
+        response = self.client.patch(
+            f"/api/knowledge/{entry.id}/", {"title": "Changed"}, format="json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "Changed")
+        self.assertEqual(response.data["body"], "Keep this")
+
+    def test_delete_returns_204_and_removes_entry(self):
+        entry = KnowledgeEntry.objects.create(title="Delete Me", body="bye")
+        entry_id = entry.id
+        response = self.client.delete(f"/api/knowledge/{entry_id}/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        # Verify entry is gone
+        response = self.client.get(f"/api/knowledge/{entry_id}/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_nonexistent_entry_returns_404(self):
+        response = self.client.get("/api/knowledge/99999/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_missing_title_returns_400_with_field_errors(self):
+        response = self.client.post(
+            "/api/knowledge/", {"body": "content"}, format="json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("title", response.data)
+
+    def test_missing_body_returns_400_with_field_errors(self):
+        response = self.client.post(
+            "/api/knowledge/", {"title": "No body"}, format="json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("body", response.data)
+
+    def test_empty_post_returns_400_with_field_errors(self):
+        response = self.client.post("/api/knowledge/", {}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("title", response.data)
+        self.assertIn("body", response.data)
+
+    def test_markdown_stored_and_returned_as_raw_text(self):
+        markdown = "# Heading\n\n- item 1\n- item 2\n\n```python\nprint('hello')\n```\n\n> blockquote"
+        data = {"title": "MD Test", "body": markdown}
+        create_resp = self.client.post("/api/knowledge/", data, format="json")
+        self.assertEqual(create_resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(create_resp.data["body"], markdown)
+        # Retrieve and verify raw Markdown is preserved
+        get_resp = self.client.get(f"/api/knowledge/{create_resp.data['id']}/")
+        self.assertEqual(get_resp.data["body"], markdown)
+
+    def test_response_format_is_json(self):
+        KnowledgeEntry.objects.create(title="Test", body="body")
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response["Content-Type"], "application/json")
+
+
+class IntegrationAuthTest(TestCase):
+    """5.2 - Test authentication enforcement."""
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username="authuser", password="authpass123")
+
+    def test_knowledge_endpoint_without_auth_returns_401(self):
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_tags_endpoint_without_auth_returns_401(self):
+        response = self.client.get("/api/tags/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_invalid_bearer_token_returns_401(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer invalidtoken123")
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_malformed_auth_header_returns_401(self):
+        self.client.credentials(HTTP_AUTHORIZATION="NotBearer sometoken")
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_token_obtain_returns_access_and_refresh(self):
+        response = self.client.post(
+            "/api/token/",
+            {"username": "authuser", "password": "authpass123"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("access", response.data)
+        self.assertIn("refresh", response.data)
+
+    def test_token_obtain_with_invalid_credentials_returns_401(self):
+        response = self.client.post(
+            "/api/token/",
+            {"username": "authuser", "password": "wrongpassword"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_token_obtain_does_not_require_auth(self):
+        # No credentials set — endpoint should still be reachable (not 401 from JWT middleware)
+        response = self.client.post(
+            "/api/token/",
+            {"username": "authuser", "password": "authpass123"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_token_refresh_does_not_require_auth(self):
+        # Obtain tokens first
+        token_resp = self.client.post(
+            "/api/token/",
+            {"username": "authuser", "password": "authpass123"},
+            format="json",
+        )
+        refresh = token_resp.data["refresh"]
+        # Refresh without auth header
+        response = self.client.post(
+            "/api/token/refresh/", {"refresh": refresh}, format="json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("access", response.data)
+
+    def test_authenticated_request_succeeds(self):
+        # Obtain token
+        token_resp = self.client.post(
+            "/api/token/",
+            {"username": "authuser", "password": "authpass123"},
+            format="json",
+        )
+        access = token_resp.data["access"]
+        # Use token for authenticated request
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {access}")
+        KnowledgeEntry.objects.create(title="Auth Test", body="body")
+        response = self.client.get("/api/knowledge/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["count"], 1)
+
+
+class IntegrationTagSearchFilterTest(AuthenticatedAPITestCase):
+    """5.3 - Test tag management, search, and filtering."""
+
+    def test_tags_auto_created_with_entry(self):
+        data = {"title": "Entry", "body": "Body", "tags": ["newtag1", "newtag2"]}
+        self.client.post("/api/knowledge/", data, format="json")
+        self.assertTrue(Tag.objects.filter(name="newtag1").exists())
+        self.assertTrue(Tag.objects.filter(name="newtag2").exists())
+
+    def test_multiple_tags_on_single_entry(self):
+        data = {"title": "Multi", "body": "Body", "tags": ["a", "b", "c"]}
+        response = self.client.post("/api/knowledge/", data, format="json")
+        self.assertEqual(len(response.data["tags"]), 3)
+
+    def test_single_tag_across_multiple_entries(self):
+        self.client.post(
+            "/api/knowledge/",
+            {"title": "E1", "body": "B1", "tags": ["shared"]},
+            format="json",
+        )
+        self.client.post(
+            "/api/knowledge/",
+            {"title": "E2", "body": "B2", "tags": ["shared"]},
+            format="json",
+        )
+        # Only one Tag object should exist
+        self.assertEqual(Tag.objects.filter(name="shared").count(), 1)
+        # Both entries should have it
+        tag = Tag.objects.get(name="shared")
+        self.assertEqual(tag.knowledgeentry_set.count(), 2)
+
+    def test_tag_list_endpoint_returns_all_tags(self):
+        Tag.objects.create(name="alpha")
+        Tag.objects.create(name="beta")
+        Tag.objects.create(name="gamma")
+        response = self.client.get("/api/tags/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        names = [t["name"] for t in response.data["results"]]
+        self.assertEqual(sorted(names), ["alpha", "beta", "gamma"])
+
+    def test_search_matches_title(self):
+        KnowledgeEntry.objects.create(title="Django REST Framework", body="content")
+        KnowledgeEntry.objects.create(title="Flask Tutorial", body="content")
+        response = self.client.get("/api/knowledge/", {"search": "Django"})
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(response.data["results"][0]["title"], "Django REST Framework")
+
+    def test_search_matches_body(self):
+        KnowledgeEntry.objects.create(title="Entry", body="Python is awesome for scripting")
+        KnowledgeEntry.objects.create(title="Other", body="Java is verbose")
+        response = self.client.get("/api/knowledge/", {"search": "Python"})
+        self.assertEqual(response.data["count"], 1)
+
+    def test_search_is_case_insensitive(self):
+        KnowledgeEntry.objects.create(title="UPPERCASE TITLE", body="content")
+        response = self.client.get("/api/knowledge/", {"search": "uppercase"})
+        self.assertEqual(response.data["count"], 1)
+
+    def test_search_no_match_returns_empty_200(self):
+        KnowledgeEntry.objects.create(title="Something", body="content")
+        response = self.client.get("/api/knowledge/", {"search": "nonexistent"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["count"], 0)
+        self.assertEqual(response.data["results"], [])
+
+    def test_combined_search_and_tag_filter(self):
+        tag_py = Tag.objects.create(name="python")
+        tag_js = Tag.objects.create(name="javascript")
+        e1 = KnowledgeEntry.objects.create(title="Python Basics", body="Learn Python")
+        e1.tags.add(tag_py)
+        e2 = KnowledgeEntry.objects.create(title="JS Basics", body="Learn JavaScript")
+        e2.tags.add(tag_js)
+        e3 = KnowledgeEntry.objects.create(title="Python Advanced", body="Advanced Python")
+        e3.tags.add(tag_py)
+        # Search for "Python" + filter by tag "python" — should get e1 and e3
+        response = self.client.get(
+            "/api/knowledge/", {"search": "Python", "tags__name": "python"}
+        )
+        self.assertEqual(response.data["count"], 2)
+        titles = sorted([r["title"] for r in response.data["results"]])
+        self.assertEqual(titles, ["Python Advanced", "Python Basics"])
