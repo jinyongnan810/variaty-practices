@@ -17,4 +17,8 @@ claude
 # Create tasks
 # Change spec.json's task to approved
 /kiro:spec-tasks personal-wiki-knowledge-base 
+
+# Start implementing
+/kiro:spec-impl personal-wiki-knowledge-base 1
+/kiro:spec-impl personal-wiki-knowledge-base 2
 ```

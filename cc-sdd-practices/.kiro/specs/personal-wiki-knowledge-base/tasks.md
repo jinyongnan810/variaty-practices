@@ -1,6 +1,6 @@
 # Implementation Plan
 
-- [ ] 1. Install dependencies, create the knowledge app, and configure Django settings
+- [x] 1. Install dependencies, create the knowledge app, and configure Django settings
   - Add djangorestframework-simplejwt and django-filter as project dependencies via Poetry
   - Create the knowledge Django app as a top-level directory alongside config
   - Register the knowledge app, rest_framework, and django_filters in INSTALLED_APPS
