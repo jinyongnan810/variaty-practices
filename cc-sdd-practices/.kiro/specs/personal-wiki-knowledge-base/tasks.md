@@ -8,7 +8,7 @@
   - Set the DRF default renderer to JSON and configure page-number pagination with a default page size
   - _Requirements: 3.1, 3.2, 3.3, 6.1, 6.3_
 
-- [ ] 2. Define KnowledgeEntry and Tag data models with migrations
+- [x] 2. Define KnowledgeEntry and Tag data models with migrations
   - Create the KnowledgeEntry model with a title field, a body text field for raw Markdown content with no maximum length restriction, and auto-managed created_at and updated_at timestamps
   - Create the Tag model with a unique name field and a created_at timestamp
   - Establish a many-to-many relationship from KnowledgeEntry to Tag allowing entries to have zero or more tags
