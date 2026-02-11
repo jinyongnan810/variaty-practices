@@ -21,4 +21,5 @@ claude
 # Start implementing
 /kiro:spec-impl personal-wiki-knowledge-base 1
 /kiro:spec-impl personal-wiki-knowledge-base 2
+/kiro:spec-impl personal-wiki-knowledge-base 3
 ```

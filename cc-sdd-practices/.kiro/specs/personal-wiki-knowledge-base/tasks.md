@@ -16,7 +16,7 @@
   - Generate and apply database migrations
   - _Requirements: 1.7, 2.1, 2.3, 4.4, 4.5, 6.2_
 
-- [ ] 3. Build serializers with tag handling logic
+- [x] 3. Build serializers with tag handling logic
   - Create a TagSerializer that outputs tag id, name, and created_at fields
   - Create a KnowledgeSerializer that accepts a list of tag name strings on write operations and returns nested tag objects on read operations
   - Implement get-or-create logic for tags in the serializer's create and update methods so that new tag names are automatically created when first used
