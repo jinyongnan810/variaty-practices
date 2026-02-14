@@ -11,6 +11,11 @@ from knowledge.models import KnowledgeEntry, Tag
 from knowledge.serializers import KnowledgeSerializer, TagSerializer
 
 
+# =============================================================================
+# Settings Tests
+# =============================================================================
+
+
 class DjangoSettingsConfigurationTest(TestCase):
     """Test that Django settings are properly configured for the wiki API."""
 
@@ -47,6 +52,11 @@ class DjangoSettingsConfigurationTest(TestCase):
         )
         self.assertIsInstance(drf_settings.get("PAGE_SIZE"), int)
         self.assertGreater(drf_settings.get("PAGE_SIZE"), 0)
+
+
+# =============================================================================
+# Model Tests
+# =============================================================================
 
 
 class TagModelTest(TestCase):
@@ -152,6 +162,11 @@ class KnowledgeEntryModelTest(TestCase):
     def test_str(self):
         entry = KnowledgeEntry.objects.create(title="My Entry", body="content")
         self.assertEqual(str(entry), "My Entry")
+
+
+# =============================================================================
+# Serializer Tests
+# =============================================================================
 
 
 class TagSerializerTest(TestCase):
@@ -272,6 +287,11 @@ class KnowledgeSerializerTest(TestCase):
         self.assertIsNotNone(serializer.data["updated_at"])
 
 
+# =============================================================================
+# ViewSet Tests
+# =============================================================================
+
+
 class KnowledgeViewSetTest(TestCase):
     """Test KnowledgeViewSet CRUD, search, and filtering."""
 
@@ -388,6 +408,11 @@ class TagViewSetTest(TestCase):
             status.HTTP_405_METHOD_NOT_ALLOWED,
             status.HTTP_403_FORBIDDEN,
         ])
+
+
+# =============================================================================
+# URL Routing Tests
+# =============================================================================
 
 
 class URLRoutingTest(TestCase):

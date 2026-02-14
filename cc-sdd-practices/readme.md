@@ -2,6 +2,18 @@
 
 A personal wiki built with Django 6 and Django REST Framework, featuring JWT authentication, tag-based organization, and keyword search.
 
+## Tech Stack
+
+| Category | Technology | Purpose |
+|----------|-----------|---------|
+| Language | Python 3.13+ | Runtime |
+| Framework | Django 6.0 | Web framework |
+| API | Django REST Framework 3.16 | REST API toolkit |
+| Auth | djangorestframework-simplejwt 5.5 | JWT authentication |
+| Filtering | django-filter 25.2 | Queryset filtering and search |
+| Database | SQLite 3 | Development database |
+| Dependency Mgmt | Poetry 2.1 | Package and virtualenv management |
+
 ## Prerequisites
 
 - Python >= 3.13
