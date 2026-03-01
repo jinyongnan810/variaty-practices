@@ -21,7 +21,7 @@ export const tricks: Trick[] = [
     technologies: ["backdrop-filter", "CSS", "opacity"],
     thumbnail:
       "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=600&q=80",
-    githubUrl: "#",
+    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/Glassmorphism.tsx",
     component: () => import("../tricks/Glassmorphism"),
   },
   {
@@ -33,7 +33,7 @@ export const tricks: Trick[] = [
     technologies: ["React hooks", "localStorage", "JSON"],
     thumbnail:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80",
-    githubUrl: "#",
+    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/UseLocalStorage.tsx",
     component: () => import("../tricks/UseLocalStorage"),
   },
   {
@@ -45,7 +45,7 @@ export const tricks: Trick[] = [
     technologies: ["animation-timeline", "CSS", "scroll()"],
     thumbnail:
       "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=80",
-    githubUrl: "#",
+    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ScrollAnimations.tsx",
     component: () => import("../tricks/ScrollAnimations"),
   },
   {
@@ -57,7 +57,7 @@ export const tricks: Trick[] = [
     technologies: ["IntersectionObserver", "JavaScript", "lazy loading"],
     thumbnail:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80",
-    githubUrl: "#",
+    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/IntersectionObserverDemo.tsx",
     component: () => import("../tricks/IntersectionObserverDemo"),
   },
   {
@@ -69,7 +69,7 @@ export const tricks: Trick[] = [
     technologies: ["React", "useState", "async"],
     thumbnail:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
-    githubUrl: "#",
+    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/OptimisticUI.tsx",
     component: () => import("../tricks/OptimisticUI"),
   },
   {
@@ -81,7 +81,7 @@ export const tricks: Trick[] = [
     technologies: ["@container", "CSS", "container-type"],
     thumbnail:
       "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&q=80",
-    githubUrl: "#",
+    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ContainerQueries.tsx",
     component: () => import("../tricks/ContainerQueries"),
   },
 ];

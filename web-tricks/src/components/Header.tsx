@@ -51,7 +51,7 @@ export default function Header({ filter, onFilterChange }: HeaderProps) {
             </button>
           ))}
         <a
-          href="https://github.com"
+          href="https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks"
           target="_blank"
           rel="noopener noreferrer"
           className="text-text-primary hover:text-text-secondary transition-colors"
