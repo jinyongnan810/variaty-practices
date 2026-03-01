@@ -1,7 +1,21 @@
+import { useMemo } from "react";
 import TrickCard from "../components/TrickCard";
 import { tricks } from "../data/tricks";
+import type { Category } from "../App";
 
-export default function Gallery() {
+interface GalleryProps {
+  filter: Category;
+}
+
+export default function Gallery({ filter }: GalleryProps) {
+  const filtered = useMemo(
+    () =>
+      filter === "All"
+        ? tricks
+        : tricks.filter((t) => t.category === filter),
+    [filter]
+  );
+
   return (
     <main>
       {/* Hero */}
@@ -40,18 +54,24 @@ export default function Gallery() {
       <section className="px-20 pb-20 flex flex-col gap-8">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-2xl font-extrabold text-text-primary tracking-tight m-0">
-            Browse Tricks
+            {filter === "All" ? "Browse Tricks" : filter}
           </h2>
           <span className="font-body text-sm text-text-tertiary">
-            {tricks.length} tricks
+            {filtered.length} {filtered.length === 1 ? "trick" : "tricks"}
           </span>
         </div>
 
         <div className="grid grid-cols-3 gap-6">
-          {tricks.map((trick) => (
+          {filtered.map((trick) => (
             <TrickCard key={trick.id} trick={trick} />
           ))}
         </div>
+
+        {filtered.length === 0 && (
+          <p className="text-center text-text-tertiary font-body text-sm py-12">
+            No tricks in this category yet.
+          </p>
+        )}
       </section>
     </main>
   );
