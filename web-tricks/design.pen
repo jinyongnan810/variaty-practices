@@ -1,0 +1,1038 @@
+{
+  "version": "2.8",
+  "children": [
+    {
+      "type": "frame",
+      "id": "4c4yR",
+      "x": 0,
+      "y": 0,
+      "name": "Tricks Gallery",
+      "clip": true,
+      "width": 1440,
+      "fill": "$bg-page",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "nSccS",
+          "name": "Header",
+          "width": "fill_container",
+          "fill": "$bg-page",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border-subtle"
+          },
+          "padding": [
+            20,
+            80
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "y9rkK",
+              "name": "logoGroup",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "gB3Pw",
+                  "name": "logoIcon",
+                  "width": 32,
+                  "height": 32,
+                  "fill": "$bg-dark",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "o290M",
+                      "name": "logoText",
+                      "fill": "$text-inverted",
+                      "content": "</>",
+                      "fontFamily": "Outfit",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "bu1JX",
+                  "name": "siteName",
+                  "fill": "$text-primary",
+                  "content": "Web Tricks",
+                  "fontFamily": "Outfit",
+                  "fontSize": 20,
+                  "fontWeight": "800",
+                  "letterSpacing": -0.5
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "eEQcD",
+              "name": "navGroup",
+              "gap": 32,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ykXQM",
+                  "name": "navAll",
+                  "fill": "$text-primary",
+                  "content": "All",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "XD8SO",
+                  "name": "navCss",
+                  "fill": "$text-secondary",
+                  "content": "CSS",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "MisSW",
+                  "name": "navJs",
+                  "fill": "$text-secondary",
+                  "content": "JavaScript",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "5cM2g",
+                  "name": "navReact",
+                  "fill": "$text-secondary",
+                  "content": "React",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "icon_font",
+                  "id": "3ZDmR",
+                  "name": "ghLink",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "github",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-primary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "iIZAG",
+          "name": "Hero",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            80,
+            80,
+            64,
+            80
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "ZYs6E",
+              "name": "heroTitle",
+              "fill": "$text-primary",
+              "content": "Tiny tricks, big impact.",
+              "textAlign": "center",
+              "fontFamily": "Outfit",
+              "fontSize": 48,
+              "fontWeight": "900",
+              "letterSpacing": -2
+            },
+            {
+              "type": "text",
+              "id": "maa5N",
+              "name": "heroSub",
+              "fill": "$text-secondary",
+              "textGrowth": "fixed-width",
+              "width": 600,
+              "content": "A curated collection of CSS, JavaScript & React snippets you can learn in minutes.",
+              "lineHeight": 1.5,
+              "textAlign": "center",
+              "fontFamily": "Inter",
+              "fontSize": 18
+            },
+            {
+              "type": "frame",
+              "id": "HCai7",
+              "name": "countRow",
+              "gap": 32,
+              "padding": [
+                24,
+                0,
+                0,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "cQYcs",
+                  "name": "countItem1",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Bje4A",
+                      "name": "countNum1",
+                      "fill": "$text-primary",
+                      "content": "12",
+                      "fontFamily": "Outfit",
+                      "fontSize": 24,
+                      "fontWeight": "900"
+                    },
+                    {
+                      "type": "text",
+                      "id": "wpnD6",
+                      "name": "countLabel1",
+                      "fill": "$text-tertiary",
+                      "content": "tricks",
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "yvplY",
+                  "name": "sep1",
+                  "fill": "$text-tertiary",
+                  "content": "·",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "Sz7Xt",
+                  "name": "countItem2",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QZnzV",
+                      "name": "countNum2",
+                      "fill": "$text-primary",
+                      "content": "3",
+                      "fontFamily": "Outfit",
+                      "fontSize": 24,
+                      "fontWeight": "900"
+                    },
+                    {
+                      "type": "text",
+                      "id": "J4gBd",
+                      "name": "countLabel2",
+                      "fill": "$text-tertiary",
+                      "content": "categories",
+                      "fontFamily": "Inter",
+                      "fontSize": 14
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "6notK",
+                  "name": "sep2",
+                  "fill": "$text-tertiary",
+                  "content": "·",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "2Kkga",
+                  "name": "countItem3",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "6f29d",
+                      "name": "countNum3",
+                      "fill": "$text-secondary",
+                      "content": "open source",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "vHqHk",
+          "name": "Grid Section",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            0,
+            80,
+            80,
+            80
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "IXJPP",
+              "name": "Section Header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "3Dkph",
+                  "name": "sectionTitle",
+                  "fill": "$text-primary",
+                  "content": "Browse Tricks",
+                  "fontFamily": "Outfit",
+                  "fontSize": 24,
+                  "fontWeight": "800",
+                  "letterSpacing": -0.5
+                },
+                {
+                  "type": "text",
+                  "id": "mithp",
+                  "name": "sectionCount",
+                  "fill": "$text-tertiary",
+                  "content": "12 tricks",
+                  "fontFamily": "Inter",
+                  "fontSize": 14
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "uSYQy",
+              "name": "Row 1",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "id": "hVY0N",
+                  "type": "ref",
+                  "ref": "2nvxT",
+                  "width": "fill_container",
+                  "name": "c1",
+                  "descendants": {
+                    "Mf5gG": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1752524722694-e0976575a993?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzIzMjQ2Mjd8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      }
+                    },
+                    "DkWVY": {
+                      "enabled": false
+                    },
+                    "7zqQw": {
+                      "content": "CSS"
+                    },
+                    "iZ6GP": {
+                      "content": "Glassmorphism Card"
+                    },
+                    "r5OoJ": {
+                      "content": "Frosted glass effect with backdrop-filter and translucent layers."
+                    }
+                  }
+                },
+                {
+                  "id": "R7OCx",
+                  "type": "ref",
+                  "ref": "2nvxT",
+                  "width": "fill_container",
+                  "name": "c2",
+                  "descendants": {
+                    "Mf5gG": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "./images/generated-1772324632905.png",
+                        "mode": "fill"
+                      }
+                    },
+                    "DkWVY": {
+                      "enabled": false
+                    },
+                    "7zqQw": {
+                      "content": "React"
+                    },
+                    "iZ6GP": {
+                      "content": "useLocalStorage Hook"
+                    },
+                    "r5OoJ": {
+                      "content": "A custom hook that syncs React state with localStorage automatically."
+                    }
+                  }
+                },
+                {
+                  "id": "LQAy5",
+                  "type": "ref",
+                  "ref": "2nvxT",
+                  "width": "fill_container",
+                  "name": "c3",
+                  "descendants": {
+                    "Mf5gG": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1656427868828-79a829b92b2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzIzMjQ2Mjh8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      }
+                    },
+                    "DkWVY": {
+                      "enabled": false
+                    },
+                    "7zqQw": {
+                      "content": "CSS"
+                    },
+                    "iZ6GP": {
+                      "content": "Scroll-Driven Animations"
+                    },
+                    "r5OoJ": {
+                      "content": "Animate elements on scroll using pure CSS animation-timeline."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rt2vX",
+              "name": "Row 2",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "id": "DhYHe",
+                  "type": "ref",
+                  "ref": "2nvxT",
+                  "width": "fill_container",
+                  "name": "c4",
+                  "descendants": {
+                    "Mf5gG": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "./images/generated-1772324636148.png",
+                        "mode": "fill"
+                      }
+                    },
+                    "DkWVY": {
+                      "enabled": false
+                    },
+                    "7zqQw": {
+                      "content": "JS"
+                    },
+                    "iZ6GP": {
+                      "content": "Intersection Observer"
+                    },
+                    "r5OoJ": {
+                      "content": "Lazy-load images and trigger animations when elements enter the viewport."
+                    }
+                  }
+                },
+                {
+                  "id": "vM6Ye",
+                  "type": "ref",
+                  "ref": "2nvxT",
+                  "width": "fill_container",
+                  "name": "c5",
+                  "descendants": {
+                    "Mf5gG": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1683135755274-4678275fbfa3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzIzMjQ2MzN8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      }
+                    },
+                    "DkWVY": {
+                      "enabled": false
+                    },
+                    "7zqQw": {
+                      "content": "React"
+                    },
+                    "iZ6GP": {
+                      "content": "Optimistic UI Updates"
+                    },
+                    "r5OoJ": {
+                      "content": "Update the UI instantly before the server confirms, then reconcile."
+                    }
+                  }
+                },
+                {
+                  "id": "P6F8K",
+                  "type": "ref",
+                  "ref": "2nvxT",
+                  "width": "fill_container",
+                  "name": "c6",
+                  "descendants": {
+                    "Mf5gG": {
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://images.unsplash.com/photo-1664748512003-8820b08d8161?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzIzMjQ2MzN8&ixlib=rb-4.1.0&q=80&w=1080",
+                        "mode": "fill"
+                      }
+                    },
+                    "DkWVY": {
+                      "enabled": false
+                    },
+                    "7zqQw": {
+                      "content": "CSS"
+                    },
+                    "iZ6GP": {
+                      "content": "Container Queries"
+                    },
+                    "r5OoJ": {
+                      "content": "Style components based on their parent size, not the viewport."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "2nvxT",
+      "x": 1600,
+      "y": 0,
+      "name": "Component/TrickCard",
+      "reusable": true,
+      "clip": true,
+      "width": 400,
+      "fill": "$bg-page",
+      "cornerRadius": 16,
+      "stroke": {
+        "align": "inside",
+        "thickness": 1,
+        "fill": "$border-subtle"
+      },
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Mf5gG",
+          "name": "thumbnail",
+          "width": "fill_container",
+          "height": 220,
+          "fill": "$bg-card",
+          "layout": "vertical",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "DkWVY",
+              "name": "thumbLabel",
+              "fill": "$text-tertiary",
+              "content": "Preview",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "wqslQ",
+          "name": "cardBody",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 10,
+          "padding": [
+            16,
+            20,
+            20,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "Vyz5o",
+              "name": "topRow",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MFXz5",
+                  "name": "tag",
+                  "fill": "$bg-card",
+                  "cornerRadius": 32,
+                  "padding": [
+                    4,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "7zqQw",
+                      "name": "tagText",
+                      "fill": "$text-secondary",
+                      "content": "CSS",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon_font",
+                  "id": "DGvwA",
+                  "name": "ghIcon",
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "github",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-tertiary"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "iZ6GP",
+              "name": "titleText",
+              "fill": "$text-primary",
+              "content": "Glassmorphism Card",
+              "fontFamily": "Outfit",
+              "fontSize": 18,
+              "fontWeight": "700",
+              "letterSpacing": -0.5
+            },
+            {
+              "type": "text",
+              "id": "r5OoJ",
+              "name": "descText",
+              "fill": "$text-secondary",
+              "textGrowth": "fixed-width",
+              "width": 340,
+              "content": "Create a frosted glass effect using backdrop-filter and semi-transparent backgrounds.",
+              "lineHeight": 1.5,
+              "fontFamily": "Inter",
+              "fontSize": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "phS2Q",
+      "x": 0,
+      "y": 1412,
+      "name": "Trick Detail View",
+      "clip": true,
+      "width": 1440,
+      "fill": "$bg-page",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "GON6O",
+          "name": "Detail Header",
+          "width": "fill_container",
+          "fill": "$bg-page",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "bottom": 1
+            },
+            "fill": "$border-subtle"
+          },
+          "padding": [
+            20,
+            80
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "j99tB",
+              "name": "backGroup",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "178eb",
+                  "name": "backIcon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "arrow-left",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-primary"
+                },
+                {
+                  "type": "text",
+                  "id": "w4Ist",
+                  "name": "backText",
+                  "fill": "$text-secondary",
+                  "content": "Back to all tricks",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pBVHX",
+              "name": "detailActions",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "6XXfu",
+                  "name": "ghBtn",
+                  "fill": "$bg-dark",
+                  "cornerRadius": 8,
+                  "gap": 8,
+                  "padding": [
+                    8,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "Y81FO",
+                      "name": "ghBtnIcon",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "github",
+                      "iconFontFamily": "lucide",
+                      "fill": "$text-inverted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Mu2V2",
+                      "name": "ghBtnText",
+                      "fill": "$text-inverted",
+                      "content": "View Source",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon_font",
+                  "id": "IfpJu",
+                  "name": "closeBtn",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "x",
+                  "iconFontFamily": "lucide",
+                  "fill": "$text-tertiary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Fj7J7",
+          "name": "Detail Content",
+          "width": "fill_container",
+          "height": 700,
+          "children": [
+            {
+              "type": "frame",
+              "id": "aQL7V",
+              "name": "Demo Area",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$bg-card",
+              "layout": "vertical",
+              "padding": 48,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "fjer4",
+                  "name": "demoLabel",
+                  "fill": "$text-tertiary",
+                  "content": "Live Demo",
+                  "fontFamily": "Outfit",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "ojW5a",
+                  "name": "demoHint",
+                  "fill": "$text-tertiary",
+                  "content": "The actual trick renders here",
+                  "fontFamily": "Inter",
+                  "fontSize": 13
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZTbcW",
+              "name": "Info Sidebar",
+              "width": 380,
+              "height": "fill_container",
+              "stroke": {
+                "align": "inside",
+                "thickness": {
+                  "left": 1
+                },
+                "fill": "$border-subtle"
+              },
+              "layout": "vertical",
+              "gap": 24,
+              "padding": [
+                40,
+                32
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "94EVZ",
+                  "name": "sideTag",
+                  "fill": "$bg-card",
+                  "cornerRadius": 32,
+                  "padding": [
+                    6,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "r9UYq",
+                      "name": "sideTagText",
+                      "fill": "$text-secondary",
+                      "content": "CSS",
+                      "fontFamily": "Outfit",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "49aZ9",
+                  "name": "sideTitle",
+                  "fill": "$text-primary",
+                  "content": "Glassmorphism Card",
+                  "fontFamily": "Outfit",
+                  "fontSize": 28,
+                  "fontWeight": "800",
+                  "letterSpacing": -1
+                },
+                {
+                  "type": "text",
+                  "id": "JrkGF",
+                  "name": "sideDesc",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 316,
+                  "content": "Create a frosted glass effect using backdrop-filter and semi-transparent backgrounds. This technique layers blurred content behind translucent surfaces to achieve a modern, depth-rich interface.",
+                  "lineHeight": 1.6,
+                  "fontFamily": "Inter",
+                  "fontSize": 15
+                },
+                {
+                  "type": "frame",
+                  "id": "ZaxLv",
+                  "name": "divider",
+                  "width": "fill_container",
+                  "height": 1,
+                  "fill": "$border-subtle"
+                },
+                {
+                  "type": "frame",
+                  "id": "G3nGZ",
+                  "name": "techSection",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "5GL1p",
+                      "name": "techLabel",
+                      "fill": "$text-tertiary",
+                      "content": "Technologies",
+                      "fontFamily": "Outfit",
+                      "fontSize": 11,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "s5EB6",
+                      "name": "techTags",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "NlubN",
+                          "name": "tag1",
+                          "cornerRadius": 8,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$border-subtle"
+                          },
+                          "padding": [
+                            6,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "D6ti6",
+                              "name": "tag1Text",
+                              "fill": "$text-secondary",
+                              "content": "backdrop-filter",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "FBQWM",
+                          "name": "tag2",
+                          "cornerRadius": 8,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$border-subtle"
+                          },
+                          "padding": [
+                            6,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "GcoB1",
+                              "name": "tag2Text",
+                              "fill": "$text-secondary",
+                              "content": "CSS",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "J1zLJ",
+                          "name": "tag3",
+                          "cornerRadius": 8,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$border-subtle"
+                          },
+                          "padding": [
+                            6,
+                            12
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "L4sbp",
+                              "name": "tag3Text",
+                              "fill": "$text-secondary",
+                              "content": "opacity",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "bg-card": {
+      "type": "color",
+      "value": "#F4F4F5"
+    },
+    "bg-dark": {
+      "type": "color",
+      "value": "#000000"
+    },
+    "bg-page": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "border-subtle": {
+      "type": "color",
+      "value": "#E4E4E7"
+    },
+    "text-inverted": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "text-primary": {
+      "type": "color",
+      "value": "#000000"
+    },
+    "text-secondary": {
+      "type": "color",
+      "value": "#71717A"
+    },
+    "text-tertiary": {
+      "type": "color",
+      "value": "#A1A1AA"
+    }
+  }
+}
