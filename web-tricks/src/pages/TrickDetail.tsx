@@ -1,16 +1,16 @@
-import { Suspense, lazy, useMemo } from "react";
+import { Suspense, lazy } from "react";
 import { useParams, Link } from "react-router";
 import { ArrowLeft, Github, X } from "lucide-react";
 import { tricks } from "../data/tricks";
 
+const lazyComponents = Object.fromEntries(
+  tricks.map((t) => [t.id, lazy(t.component)])
+);
+
 export default function TrickDetail() {
   const { id } = useParams<{ id: string }>();
   const trick = tricks.find((t) => t.id === id);
-
-  const DemoComponent = useMemo(() => {
-    if (!trick) return null;
-    return lazy(trick.component);
-  }, [trick]);
+  const DemoComponent = id ? lazyComponents[id] : null;
 
   if (!trick || !DemoComponent) {
     return (
