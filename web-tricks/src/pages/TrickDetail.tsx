@@ -1,10 +1,10 @@
-import { Suspense, lazy } from "react";
-import { useParams, Link } from "react-router";
 import { ArrowLeft, Github, X } from "lucide-react";
+import { Suspense, lazy } from "react";
+import { Link, useParams } from "react-router";
 import { tricks } from "../data/tricks";
 
 const lazyComponents = Object.fromEntries(
-  tricks.map((t) => [t.id, lazy(t.component)])
+  tricks.map((t) => [t.id, lazy(t.component)]),
 );
 
 export default function TrickDetail() {
