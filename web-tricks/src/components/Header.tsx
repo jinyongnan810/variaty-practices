@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router";
-import { Github } from "lucide-react";
+import GithubIcon from "./GithubIcon";
 import type { Category } from "../App";
 
 const categories: { label: string; value: Category }[] = [
@@ -56,7 +56,7 @@ export default function Header({ filter, onFilterChange }: HeaderProps) {
           rel="noopener noreferrer"
           className="text-text-primary hover:text-text-secondary transition-colors"
         >
-          <Github size={20} />
+          <GithubIcon size={20} />
         </a>
       </nav>
     </header>

@@ -1,6 +1,7 @@
-import { ArrowLeft, Github, X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import { Suspense, lazy } from "react";
 import { Link, useParams } from "react-router";
+import GithubIcon from "../components/GithubIcon";
 import { tricks } from "../data/tricks";
 
 const lazyComponents = Object.fromEntries(
@@ -40,7 +41,7 @@ export default function TrickDetail() {
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-dark text-text-inverted px-4 py-2 rounded-lg no-underline hover:opacity-80 transition-opacity"
           >
-            <Github size={16} />
+            <GithubIcon size={16} />
             <span className="font-body text-[13px] font-semibold">
               View Source
             </span>

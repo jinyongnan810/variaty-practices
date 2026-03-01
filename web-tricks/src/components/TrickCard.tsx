@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Github } from "lucide-react";
+import GithubIcon from "./GithubIcon";
 import type { Trick } from "../data/tricks";
 
 interface TrickCardProps {
@@ -32,7 +32,7 @@ export default function TrickCard({ trick }: TrickCardProps) {
             className="text-text-tertiary hover:text-text-primary transition-colors"
             onClick={(e) => e.stopPropagation()}
           >
-            <Github size={18} />
+            <GithubIcon size={18} />
           </a>
         </div>
 
