@@ -26,8 +26,8 @@ export default function OptimisticUI() {
     // Optimistically update
     setTodos((prev) =>
       prev.map((t) =>
-        t.id === id ? { ...t, done: !t.done, saving: true } : t
-      )
+        t.id === id ? { ...t, done: !t.done, saving: true } : t,
+      ),
     );
     setLog((l) => [...l.slice(-3), `Toggled #${id} (optimistic)`]);
 
@@ -35,7 +35,7 @@ export default function OptimisticUI() {
     await simulateServer();
 
     setTodos((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, saving: false } : t))
+      prev.map((t) => (t.id === id ? { ...t, saving: false } : t)),
     );
     setLog((l) => [...l.slice(-3), `Server confirmed #${id}`]);
   };
@@ -70,12 +70,7 @@ export default function OptimisticUI() {
                 }`}
               >
                 {todo.done && (
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                  >
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path
                       d="M2.5 6L5 8.5L9.5 3.5"
                       stroke="white"

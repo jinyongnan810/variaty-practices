@@ -10,10 +10,8 @@ interface GalleryProps {
 export default function Gallery({ filter }: GalleryProps) {
   const filtered = useMemo(
     () =>
-      filter === "All"
-        ? tricks
-        : tricks.filter((t) => t.category === filter),
-    [filter]
+      filter === "All" ? tricks : tricks.filter((t) => t.category === filter),
+    [filter],
   );
 
   return (

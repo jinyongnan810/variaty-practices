@@ -7,7 +7,10 @@ export default function ScrollAnimations() {
         </h3>
         <p className="text-sm text-text-secondary m-0 mb-4">
           Scroll down in this box to see elements animate in using pure CSS{" "}
-          <code className="bg-card px-1 rounded text-xs">animation-timeline</code>.
+          <code className="bg-card px-1 rounded text-xs">
+            animation-timeline
+          </code>
+          .
         </p>
       </div>
 
@@ -52,7 +55,7 @@ export default function ScrollAnimations() {
                   </p>
                 </div>
               </div>
-            )
+            ),
           )}
         </div>
       </div>

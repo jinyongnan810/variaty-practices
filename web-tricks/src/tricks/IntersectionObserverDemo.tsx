@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-function FadeInBox({ label, color, delay }: { label: string; color: string; delay: number }) {
+function FadeInBox({
+  label,
+  color,
+  delay,
+}: {
+  label: string;
+  color: string;
+  delay: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -14,7 +22,7 @@ function FadeInBox({ label, color, delay }: { label: string; color: string; dela
           observer.unobserve(el);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
     observer.observe(el);
     return () => observer.disconnect();

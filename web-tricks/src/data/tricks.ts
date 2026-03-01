@@ -1,11 +1,11 @@
 import type { ComponentType } from "react";
 
+import containerQueriesThumb from "../assets/thumbnails/containerQueries.png";
 import glassmorphismThumb from "../assets/thumbnails/glassmorphism.png";
-import useLocalStorageThumb from "../assets/thumbnails/useLocalStorage.png";
-import scrollAnimationsThumb from "../assets/thumbnails/scrollDrivenAnimations.png";
 import intersectionObserverThumb from "../assets/thumbnails/intersectionObserver.png";
 import optimisticUIThumb from "../assets/thumbnails/optimisticUIUpdates.png";
-import containerQueriesThumb from "../assets/thumbnails/containerQueries.png";
+import scrollAnimationsThumb from "../assets/thumbnails/scrollDrivenAnimations.png";
+import useLocalStorageThumb from "../assets/thumbnails/useLocalStorage.png";
 
 export interface Trick {
   id: string;
@@ -27,7 +27,8 @@ export const tricks: Trick[] = [
     category: "CSS",
     technologies: ["backdrop-filter", "CSS", "opacity"],
     thumbnail: glassmorphismThumb,
-    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/Glassmorphism.tsx",
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/Glassmorphism.tsx",
     component: () => import("../tricks/Glassmorphism"),
   },
   {
@@ -38,7 +39,8 @@ export const tricks: Trick[] = [
     category: "React",
     technologies: ["React hooks", "localStorage", "JSON"],
     thumbnail: useLocalStorageThumb,
-    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/UseLocalStorage.tsx",
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/UseLocalStorage.tsx",
     component: () => import("../tricks/UseLocalStorage"),
   },
   {
@@ -49,7 +51,8 @@ export const tricks: Trick[] = [
     category: "CSS",
     technologies: ["animation-timeline", "CSS", "scroll()"],
     thumbnail: scrollAnimationsThumb,
-    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ScrollAnimations.tsx",
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ScrollAnimations.tsx",
     component: () => import("../tricks/ScrollAnimations"),
   },
   {
@@ -60,7 +63,8 @@ export const tricks: Trick[] = [
     category: "JS",
     technologies: ["IntersectionObserver", "JavaScript", "lazy loading"],
     thumbnail: intersectionObserverThumb,
-    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/IntersectionObserverDemo.tsx",
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/IntersectionObserverDemo.tsx",
     component: () => import("../tricks/IntersectionObserverDemo"),
   },
   {
@@ -71,7 +75,8 @@ export const tricks: Trick[] = [
     category: "React",
     technologies: ["React", "useState", "async"],
     thumbnail: optimisticUIThumb,
-    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/OptimisticUI.tsx",
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/OptimisticUI.tsx",
     component: () => import("../tricks/OptimisticUI"),
   },
   {
@@ -82,7 +87,8 @@ export const tricks: Trick[] = [
     category: "CSS",
     technologies: ["@container", "CSS", "container-type"],
     thumbnail: containerQueriesThumb,
-    githubUrl: "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ContainerQueries.tsx",
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ContainerQueries.tsx",
     component: () => import("../tricks/ContainerQueries"),
   },
 ];

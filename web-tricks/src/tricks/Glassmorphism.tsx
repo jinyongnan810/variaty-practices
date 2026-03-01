@@ -12,7 +12,11 @@ export default function Glassmorphism() {
           Glass Card
         </h3>
         <p className="text-white/80 text-sm leading-relaxed m-0">
-          This card uses <code className="bg-white/20 px-1 rounded text-xs">backdrop-filter: blur()</code> and a semi-transparent background to create a frosted glass effect.
+          This card uses{" "}
+          <code className="bg-white/20 px-1 rounded text-xs">
+            backdrop-filter: blur()
+          </code>{" "}
+          and a semi-transparent background to create a frosted glass effect.
         </p>
       </div>
     </div>
