@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 
+import compositionSearchThumb from "../assets/thumbnails/compositionSearch.png";
 import containerQueriesThumb from "../assets/thumbnails/containerQueries.png";
 import glassmorphismThumb from "../assets/thumbnails/glassmorphism.png";
 import intersectionObserverThumb from "../assets/thumbnails/intersectionObserver.png";
@@ -20,6 +21,18 @@ export interface Trick {
 }
 
 const trickList: Trick[] = [
+  {
+    id: "composition-search",
+    title: "Composition Search (IME)",
+    description:
+      "Use onCompositionStart/onCompositionEnd so search waits until Japanese IME input is committed.",
+    category: "React",
+    technologies: ["React", "IME composition", "onCompositionStart"],
+    thumbnail: compositionSearchThumb,
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/CompositionSearch.tsx",
+    component: () => import("../tricks/CompositionSearch"),
+  },
   {
     id: "glassmorphism",
     title: "Glassmorphism Card",
