@@ -11,7 +11,7 @@ export default function LegacyExternalPage({
     <iframe
       title={title}
       src={src}
-      className="h-[520px] w-[620px] rounded-2xl border border-border bg-white"
+      className="h-full w-full rounded-2xl border border-border bg-white"
       sandbox="allow-scripts allow-same-origin"
     />
   );
