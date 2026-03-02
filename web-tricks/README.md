@@ -1,6 +1,7 @@
 # Web Tricks
 
 This folder contains a React app that showcases small, practical web development tricks in a clean gallery format.
+Deployed on: https://variaty-practices.vercel.app
 
 ## What this folder does
 
