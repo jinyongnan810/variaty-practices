@@ -12,7 +12,7 @@ This folder contains a React app that showcases small, practical web development
   - a link to the source file on GitHub
 - Uses lazy-loading for demo components so pages load faster.
 
-## Core tech used in this React project (excluding trick-specific APIs)
+## Core tech used in this project
 
 - React 19
 - React Router 7
@@ -23,6 +23,7 @@ This folder contains a React app that showcases small, practical web development
 - Prettier
 - Fontsource (`@fontsource/inter`, `@fontsource/outfit`)
 - Icon libraries (`lucide-react`, `simple-icons`)
+- `iframe`-based embedding for migrated legacy demos served from `public/legacy-tricks`
 
 ## Scripts
 

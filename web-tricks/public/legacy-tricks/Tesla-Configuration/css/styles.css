@@ -1,0 +1,33 @@
+#exterior-buttons button {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  padding: 8px;
+  transition: all 0.3s;
+}
+#exterior-buttons button.btn-selected {
+  border: 2px solid #ccc;
+}
+
+#interior-buttons button {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  padding: 8px;
+  transition: all 0.3s;
+}
+#interior-buttons button.btn-selected {
+  border: 2px solid #ccc;
+}
+
+.btn-selected:hover {
+  transform: scale(1) !important;
+}
+
+#top-bar {
+  transition: transform 0.5s ease-in-out;
+}
+.visible-bar {
+  transform: translateY(0);
+}
+.hidden-bar {
+  transform: translateY(-100%);
+}

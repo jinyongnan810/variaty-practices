@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: #efedd6;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+.container {
+  width: 600px;
+}
+
+.header {
+  font-size: xx-large;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.box {
+  background-color: transparent;
+  position: relative;
+  width: 100%;
+  border: 2px solid #888;
+  border-radius: 5px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  transition: 0.4s ease;
+  overflow: hidden;
+}
+
+.box.active {
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    0 2px 10px rgba(0, 0, 0, 0.3);
+  background-color: white;
+}
+
+.box.active::before,
+.box.active::after {
+  content: "\f075";
+  font-family: "Font Awesome 6 Free";
+  color: #2ecc71;
+  font-size: 7rem;
+  position: absolute;
+  opacity: 0.2;
+  top: 20px;
+  left: 20px;
+  z-index: 0;
+}
+.box.active::after {
+  color: #3498db;
+  top: -10px;
+  left: -30px;
+  transform: rotateY(180deg);
+}
+
+.q {
+  font-size: large;
+  font-weight: bold;
+  padding: 12px 0;
+}
+
+.a {
+  font-weight: bold;
+  padding: 0;
+  /* display: none; */
+  max-height: 0;
+  opacity: 0;
+  transition: 0.4s ease;
+}
+
+.active .a {
+  /* display: block; */
+  max-height: 100vh;
+  padding: 12px 0;
+  opacity: 1;
+}
+
+.btn {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border-radius: 10px;
+  text-align: center;
+  display: block;
+}
+
+.btn i {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.close {
+  color: white;
+  background-color: #888;
+  display: none;
+}
+
+.active .close {
+  display: block;
+}
+
+.expand i {
+  font-size: 16px;
+}
+
+.active .expand {
+  display: none;
+}
