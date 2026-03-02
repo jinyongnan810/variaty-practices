@@ -556,13 +556,57 @@ const legacyThumbnailById: Record<string, string> = {
   "winbox-landing-page": "/thumbnails/legacy/winbox-landing-page.png",
 };
 
+const legacySourceFolderById: Record<string, string> = {
+  "blurry-loading": "Blurry-Loading",
+  "breakout-game": "Breakout-Game",
+  "dom-methods": "Dom-Methods",
+  "exapanse-tracker": "Exapanse-Tracker",
+  "extending-cards": "Extending-Cards",
+  "faq-collapse": "FAQ-Collapse",
+  "form-validator-legacy": "Form-Validator",
+  "form-wave-animation": "Form-Wave-Animation",
+  "hangman-legacy": "Hangman",
+  "hidden-search": "Hidden-Search",
+  "infinite-scroll": "Infinite-Scroll",
+  "key-codes": "Key-Codes",
+  "kins-page": "Kins-Page",
+  "lyrics-search": "Lyrics-Search",
+  "meal-search": "Meal-Search",
+  "memory-cards": "Memory-Cards",
+  "menu-modal": "Menu-Modal",
+  "mine-sweeper": "Mine-Sweeper",
+  "movie-seat": "Movie-Seat",
+  "music-player": "Music-Player",
+  "random-choice-picker": "Random-Choice-Picker",
+  "rotating-navigation": "Rotating-Navigation",
+  "scroll-animation-legacy": "Scroll-Animation",
+  "sortable-list": "Sortable-List",
+  "typing-game": "Typing-Game",
+  "exchange-rate-calculator": "Exchange-Rate-Calculator",
+  "newyear-countdown": "NewYear-CountDown",
+  "number-guessing-game": "Number-Guessing-Game",
+  "relaxer-legacy": "Relaxer",
+  "sass-demo": "Sass-Demo",
+  "sound-board": "Sound-Board",
+  "speech-text-reader": "Speech-Text-Reader",
+  "split-landing-page": "Split-Landing-Page",
+  "tesla-configuration": "Tesla-Configuration",
+  "video-legacy": "Video",
+  "winbox-landing-page": "Winbox-Landing-Page",
+};
+
 export const tricks: Trick[] = trickList.map((trick) => {
+  const sourceFolder = legacySourceFolderById[trick.id];
+  const githubUrl = sourceFolder
+    ? `https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/public/legacy-tricks/${sourceFolder}`
+    : trick.githubUrl;
+
   if (trick.thumbnail === progressStepsThumb && trick.id !== "progress-steps") {
     const mappedThumbnail = legacyThumbnailById[trick.id];
     if (mappedThumbnail) {
-      return { ...trick, thumbnail: mappedThumbnail };
+      return { ...trick, githubUrl, thumbnail: mappedThumbnail };
     }
-    return { ...trick, thumbnail: progressStepsThumb };
+    return { ...trick, githubUrl, thumbnail: progressStepsThumb };
   }
-  return trick;
+  return { ...trick, githubUrl };
 });
