@@ -22,6 +22,17 @@ export interface Trick {
 
 const trickList: Trick[] = [
   {
+    id: "kins-page",
+    title: "Kin's Page",
+    description: "Memo/blog style page migrated from Kin's legacy project.",
+    category: "JS",
+    technologies: ["Markdown rendering", "Firestore API", "layout"],
+    thumbnail: progressStepsThumb,
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/KinsPage.tsx",
+    component: () => import("../tricks/KinsPage"),
+  },
+  {
     id: "composition-search",
     title: "Composition Search (IME)",
     description:
@@ -202,17 +213,7 @@ const trickList: Trick[] = [
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/KeyCodes.tsx",
     component: () => import("../tricks/KeyCodes"),
   },
-  {
-    id: "kins-page",
-    title: "Kin's Page",
-    description: "Memo/blog style page migrated from Kin's legacy project.",
-    category: "JS",
-    technologies: ["Markdown rendering", "Firestore API", "layout"],
-    thumbnail: progressStepsThumb,
-    githubUrl:
-      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/KinsPage.tsx",
-    component: () => import("../tricks/KinsPage"),
-  },
+
   {
     id: "lyrics-search",
     title: "Lyrics Search",
