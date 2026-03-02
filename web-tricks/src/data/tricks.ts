@@ -190,6 +190,17 @@ const trickList: Trick[] = [
     component: () => import("../tricks/KeyCodes"),
   },
   {
+    id: "kins-page",
+    title: "Kin's Page",
+    description: "Memo/blog style page migrated from Kin's legacy project.",
+    category: "JS",
+    technologies: ["Markdown rendering", "Firestore API", "layout"],
+    thumbnail: progressStepsThumb,
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/KinsPage.tsx",
+    component: () => import("../tricks/KinsPage"),
+  },
+  {
     id: "lyrics-search",
     title: "Lyrics Search",
     description: "Lyrics search demo migrated from legacy project.",
@@ -505,6 +516,7 @@ const legacyThumbnailById: Record<string, string> = {
   "hidden-search": "/thumbnails/legacy/hidden-search.png",
   "infinite-scroll": "/thumbnails/legacy/infinite-scroll.jpg",
   "key-codes": "/thumbnails/legacy/key-codes.png",
+  "kins-page": "/thumbnails/legacy/kins-page.png",
   "lyrics-search": "/thumbnails/legacy/lyrics-search.jpg",
   "meal-search": "/thumbnails/legacy/meals-search.jpg",
   "memory-cards": "/thumbnails/legacy/memory-cards.jpg",
