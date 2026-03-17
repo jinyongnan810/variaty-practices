@@ -95,6 +95,7 @@ export default function UseLocalStorageDemo() {
           <span className="text-sm">Dark mode</span>
           <button
             onClick={() => setDark((d) => !d)}
+            aria-label="Toggle dark mode"
             className={`w-10 h-6 rounded-full relative cursor-pointer transition-colors ${
               dark ? "bg-white" : "bg-zinc-300"
             }`}

@@ -9,7 +9,13 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "playwright test",
+    "test:e2e:specs": "playwright test e2e/specs",
+    "test:e2e:md": "playwright test e2e/markdown",
+    "test:e2e:mcp": "node scripts/run-mcp-e2e.mjs",
+    "test:e2e:mcp:prompt": "node scripts/generate-mcp-e2e-prompt.mjs",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -22,6 +28,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@playwright/mcp": "^0.0.68",
+    "@playwright/test": "^1.55.1",
     "@tailwindcss/vite": "^4.2.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",

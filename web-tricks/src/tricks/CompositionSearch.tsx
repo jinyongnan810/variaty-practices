@@ -72,7 +72,10 @@ export default function CompositionSearch() {
 
       <div className="rounded-xl border border-border bg-zinc-50 p-3 flex items-center justify-between text-xs">
         <span className="text-text-tertiary">Composition status</span>
-        <strong className={isComposing ? "text-amber-600" : "text-emerald-600"}>
+        <strong
+          aria-label="Composition status value"
+          className={isComposing ? "text-amber-600" : "text-emerald-600"}
+        >
           {isComposing ? "Composing..." : "Committed"}
         </strong>
       </div>
@@ -81,7 +84,9 @@ export default function CompositionSearch() {
         <div className="flex items-center justify-between text-xs">
           <span className="text-text-tertiary">
             Applied keyword:{" "}
-            <code className="text-text-primary">{keyword || "(empty)"}</code>
+            <code aria-label="Applied keyword value" className="text-text-primary">
+              {keyword || "(empty)"}
+            </code>
           </span>
           <span className="text-text-tertiary">
             {filteredItems.length} results
