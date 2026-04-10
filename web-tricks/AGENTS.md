@@ -122,6 +122,7 @@ For MCP scenario work:
 - Adjusting theme tokens in `src/index.css`
 - Extending Playwright specs for new visible behavior
 - Updating MCP test scripts or scenario content
+- Do not update e2e tests unless explictly ask to.
 
 ## Watchouts
 

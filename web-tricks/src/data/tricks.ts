@@ -6,6 +6,7 @@ import glassmorphismThumb from "../assets/thumbnails/glassmorphism.png";
 import intersectionObserverThumb from "../assets/thumbnails/intersectionObserver.png";
 import optimisticUIThumb from "../assets/thumbnails/optimisticUIUpdates.png";
 import progressStepsThumb from "../assets/thumbnails/progressSteps.png";
+import rechartsThumb from "../assets/thumbnails/recharts.png";
 import scrollAnimationsThumb from "../assets/thumbnails/scrollDrivenAnimations.png";
 import useLocalStorageThumb from "../assets/thumbnails/useLocalStorage.png";
 
@@ -21,6 +22,18 @@ export interface Trick {
 }
 
 const trickList: Trick[] = [
+  {
+    id: "basic-recharts",
+    title: "Basic Recharts",
+    description:
+      "Three tabbed chart examples using Recharts: grouped bars, multi-line trends, and a pie chart.",
+    category: "React",
+    technologies: ["React", "Recharts", "tabs"],
+    thumbnail: rechartsThumb,
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/BasicRecharts.tsx",
+    component: () => import("../tricks/BasicRecharts"),
+  },
   {
     id: "kins-page",
     title: "Kin's Page",

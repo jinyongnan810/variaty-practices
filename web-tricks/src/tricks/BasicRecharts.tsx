@@ -1,0 +1,246 @@
+import { useId, useState } from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+
+type TabKey = "bar" | "line" | "pie";
+
+const tabs: { key: TabKey; label: string; description: string }[] = [
+  {
+    key: "bar",
+    label: "Bar Chart",
+    description: "Compare two metrics across locations.",
+  },
+  {
+    key: "line",
+    label: "Line Chart",
+    description: "Track three related series over time.",
+  },
+  {
+    key: "pie",
+    label: "Pie Chart",
+    description: "Split a whole into visible segments.",
+  },
+];
+
+const barData = [
+  { location: "Seoul", desktop: 420, mobile: 310 },
+  { location: "Tokyo", desktop: 390, mobile: 360 },
+  { location: "Berlin", desktop: 320, mobile: 240 },
+  { location: "Austin", desktop: 460, mobile: 330 },
+  { location: "Sydney", desktop: 370, mobile: 280 },
+];
+
+const lineData = [
+  { month: "Jan", signups: 140, activeUsers: 320, revenue: 24 },
+  { month: "Feb", signups: 205, activeUsers: 410, revenue: 36 },
+  { month: "Mar", signups: 125, activeUsers: 280, revenue: 19 },
+  { month: "Apr", signups: 260, activeUsers: 455, revenue: 41 },
+  { month: "May", signups: 175, activeUsers: 330, revenue: 27 },
+  { month: "Jun", signups: 295, activeUsers: 495, revenue: 45 },
+];
+
+const pieData = [
+  { name: "Direct", value: 38 },
+  { name: "Search", value: 27 },
+  { name: "Referral", value: 19 },
+  { name: "Social", value: 16 },
+];
+
+const pieColors = ["#0f172a", "#2563eb", "#14b8a6", "#f59e0b"];
+
+function TabButton({
+  active,
+  controls,
+  id,
+  label,
+  onClick,
+}: {
+  active: boolean;
+  controls: string;
+  id: string;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      id={id}
+      role="tab"
+      type="button"
+      aria-selected={active}
+      aria-controls={controls}
+      tabIndex={active ? 0 : -1}
+      onClick={onClick}
+      className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+        active
+          ? "bg-dark text-text-inverted"
+          : "bg-white text-text-secondary border border-border hover:text-text-primary"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+export default function BasicRecharts() {
+  const [activeTab, setActiveTab] = useState<TabKey>("bar");
+  const id = useId();
+  const currentTab = tabs.find((tab) => tab.key === activeTab) ?? tabs[0];
+  const tabPanelId = `${id}-${activeTab}-panel`;
+
+  return (
+    <section className="w-[820px] max-w-full rounded-[28px] border border-border bg-white p-6 shadow-sm md:p-8">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-3">
+          <span className="text-xs font-semibold uppercase tracking-[0.24em] text-text-tertiary">
+            React + Recharts
+          </span>
+          <div className="flex flex-col gap-2">
+            <h3 className="m-0 font-display text-3xl font-extrabold tracking-tight text-text-primary">
+              Basic chart patterns
+            </h3>
+            <p className="m-0 max-w-[520px] text-sm leading-6 text-text-secondary">
+              A minimal Recharts demo with three hardcoded visualizations:
+              grouped bars, multi-series lines, and a pie chart.
+            </p>
+          </div>
+        </div>
+
+        <div
+          role="tablist"
+          aria-label="Chart type"
+          className="flex flex-wrap gap-3"
+        >
+          {tabs.map((tab) => (
+            <TabButton
+              key={tab.key}
+              id={`${id}-${tab.key}-tab`}
+              controls={`${id}-${tab.key}-panel`}
+              label={tab.label}
+              active={tab.key === activeTab}
+              onClick={() => setActiveTab(tab.key)}
+            />
+          ))}
+        </div>
+
+        <div
+          id={tabPanelId}
+          role="tabpanel"
+          aria-labelledby={`${id}-${activeTab}-tab`}
+          className="rounded-[24px] border border-border bg-card p-5"
+        >
+          <div className="mb-5 flex flex-col gap-1">
+            <h4 className="m-0 font-display text-xl font-bold text-text-primary">
+              {currentTab.label}
+            </h4>
+            <p className="m-0 text-sm text-text-secondary">
+              {currentTab.description}
+            </p>
+          </div>
+
+          {activeTab === "bar" && (
+            <div className="h-[360px] w-full" aria-label="Bar chart demo">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={barData} barGap={10}>
+                  <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
+                  <XAxis dataKey="location" tickLine={false} axisLine={false} />
+                  <YAxis tickLine={false} axisLine={false} />
+                  <Tooltip />
+                  <Legend />
+                  <Bar
+                    dataKey="desktop"
+                    name="Desktop"
+                    fill="#0f172a"
+                    radius={[8, 8, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="mobile"
+                    name="Mobile"
+                    fill="#2563eb"
+                    radius={[8, 8, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
+          {activeTab === "line" && (
+            <div className="h-[360px] w-full" aria-label="Line chart demo">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={lineData}>
+                  <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
+                  <XAxis dataKey="month" tickLine={false} axisLine={false} />
+                  <YAxis tickLine={false} axisLine={false} />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="signups"
+                    name="Signups"
+                    stroke="#2563eb"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="activeUsers"
+                    name="Active Users"
+                    stroke="#14b8a6"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="revenue"
+                    name="Revenue"
+                    stroke="#f59e0b"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
+          {activeTab === "pie" && (
+            <div className="h-[360px] w-full" aria-label="Pie chart demo">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    innerRadius={80}
+                    outerRadius={122}
+                    paddingAngle={4}
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell
+                        key={entry.name}
+                        fill={pieColors[index % pieColors.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
