@@ -10,33 +10,37 @@ test.describe("trick detail demos", () => {
     await page.getByRole("button", { name: "Toggle dark mode" }).click();
 
     await expect(page.getByText(/Count:\s*1/i)).toBeVisible();
-    await expect.poll(() =>
-      page.evaluate(() => ({
-        name: localStorage.getItem("demo-name"),
-        count: localStorage.getItem("demo-count"),
-        dark: localStorage.getItem("demo-dark"),
-      })),
-    ).toEqual({
-      name: JSON.stringify("Kin"),
-      count: JSON.stringify(1),
-      dark: JSON.stringify(true),
-    });
+    await expect
+      .poll(() =>
+        page.evaluate(() => ({
+          name: localStorage.getItem("demo-name"),
+          count: localStorage.getItem("demo-count"),
+          dark: localStorage.getItem("demo-dark"),
+        })),
+      )
+      .toEqual({
+        name: JSON.stringify("Kin"),
+        count: JSON.stringify(1),
+        dark: JSON.stringify(true),
+      });
 
     await page.reload();
 
     await expect(nameInput).toHaveValue("Kin");
     await expect(page.getByText(/Count:\s*1/i)).toBeVisible();
-    await expect.poll(() =>
-      page.evaluate(() => ({
-        name: localStorage.getItem("demo-name"),
-        count: localStorage.getItem("demo-count"),
-        dark: localStorage.getItem("demo-dark"),
-      })),
-    ).toEqual({
-      name: JSON.stringify("Kin"),
-      count: JSON.stringify(1),
-      dark: JSON.stringify(true),
-    });
+    await expect
+      .poll(() =>
+        page.evaluate(() => ({
+          name: localStorage.getItem("demo-name"),
+          count: localStorage.getItem("demo-count"),
+          dark: localStorage.getItem("demo-dark"),
+        })),
+      )
+      .toEqual({
+        name: JSON.stringify("Kin"),
+        count: JSON.stringify(1),
+        dark: JSON.stringify(true),
+      });
 
     await page.getByRole("button", { name: "Reset all" }).click();
     await expect(nameInput).toHaveValue("");
@@ -50,9 +54,9 @@ test.describe("trick detail demos", () => {
 
     const input = page.getByRole("textbox", { name: "Search keyword" });
 
-    await expect(
-      page.getByLabel("Applied keyword value"),
-    ).toHaveText("(empty)");
+    await expect(page.getByLabel("Applied keyword value")).toHaveText(
+      "(empty)",
+    );
     await expect(page.getByText("22 results")).toBeVisible();
 
     await input.dispatchEvent("compositionstart");
@@ -61,9 +65,9 @@ test.describe("trick detail demos", () => {
     await expect(page.getByLabel("Composition status value")).toContainText(
       "Composing...",
     );
-    await expect(
-      page.getByLabel("Applied keyword value"),
-    ).toHaveText("(empty)");
+    await expect(page.getByLabel("Applied keyword value")).toHaveText(
+      "(empty)",
+    );
     await expect(page.getByText("22 results")).toBeVisible();
 
     await input.dispatchEvent("compositionend", { data: "東" });

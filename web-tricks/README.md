@@ -69,7 +69,7 @@ You can also author executable browser scenarios in Markdown at [e2e/markdown/sc
 Current supported step patterns are:
 
 - `Visit \`/path\``
-- `Click button \`...\`` or `Click link \`...\``
+- `Click button \`...\``or`Click link \`...\``
 - `Fill textbox \`...\` with \`...\``
 - `Expect heading|text|link|button|textbox \`...\``
 - `Expect no link \`...\``

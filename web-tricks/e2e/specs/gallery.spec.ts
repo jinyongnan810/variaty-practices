@@ -1,7 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("gallery", () => {
-  test("filters tricks by category and opens detail pages", async ({ page }) => {
+  test("filters tricks by category and opens detail pages", async ({
+    page,
+  }) => {
     await page.goto("/");
 
     await expect(
@@ -27,7 +29,9 @@ test.describe("gallery", () => {
       page.getByRole("link", { name: /Glassmorphism Card/i }),
     ).toHaveCount(0);
 
-    await page.getByRole("link", { name: /Composition Search \(IME\)/i }).click();
+    await page
+      .getByRole("link", { name: /Composition Search \(IME\)/i })
+      .click();
 
     await expect(
       page.getByRole("heading", { name: "Composition Search (IME)" }),

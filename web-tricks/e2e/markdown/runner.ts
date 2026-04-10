@@ -38,11 +38,15 @@ export async function runMarkdownStep(page: Page, step: string) {
 
   match = step.match(/^Click\s+(button|link)\s+`(.+)`$/);
   if (match) {
-    await page.getByRole(match[1] as "button" | "link", { name: match[2] }).click();
+    await page
+      .getByRole(match[1] as "button" | "link", { name: match[2] })
+      .click();
     return;
   }
 
-  match = step.match(/^Fill\s+(textbox|searchbox)\s+`(.+)`\s+with\s+`([\s\S]*)`$/);
+  match = step.match(
+    /^Fill\s+(textbox|searchbox)\s+`(.+)`\s+with\s+`([\s\S]*)`$/,
+  );
   if (match) {
     await page
       .getByRole(match[1] as "textbox" | "searchbox", { name: match[2] })

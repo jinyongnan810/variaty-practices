@@ -84,7 +84,10 @@ export default function CompositionSearch() {
         <div className="flex items-center justify-between text-xs">
           <span className="text-text-tertiary">
             Applied keyword:{" "}
-            <code aria-label="Applied keyword value" className="text-text-primary">
+            <code
+              aria-label="Applied keyword value"
+              className="text-text-primary"
+            >
               {keyword || "(empty)"}
             </code>
           </span>

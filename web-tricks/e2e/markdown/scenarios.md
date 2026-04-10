@@ -1,6 +1,7 @@
 # Markdown E2E Scenarios
 
 ## Gallery filter and detail navigation
+
 - Visit `/`
 - Expect heading `Tiny tricks, big impact.`
 - Expect heading `Browse Tricks`
@@ -17,11 +18,13 @@
 - Take screenshot `gallery-react-detail`
 
 ## Not found route
+
 - Visit `/trick/does-not-exist`
 - Expect text `Trick not found.`
 - Take screenshot `trick-not-found`
 
 ## useLocalStorage persistence
+
 - Visit `/trick/use-local-storage`
 - Fill textbox `Name` with `Kin`
 - Click button `+`
@@ -34,6 +37,7 @@
 - Take screenshot `use-local-storage-after-reload`
 
 ## Composition search
+
 - Visit `/trick/composition-search`
 - Expect label `Applied keyword value` equals `(empty)`
 - Fill textbox `Search keyword` with `東`
