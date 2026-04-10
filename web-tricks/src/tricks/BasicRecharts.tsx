@@ -1,10 +1,13 @@
+// Basic Recharts demo:
+// - switches between bar, line, and pie charts with tabs
+// - uses hardcoded data to show common chart setups
+// - includes interactive legends and a shared custom tooltip
 import { useId, useState } from "react";
 import type { TooltipContentProps, TooltipValueType } from "recharts";
 import {
   Bar,
   BarChart,
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   Pie,
@@ -18,6 +21,19 @@ import {
 
 type TabKey = "bar" | "line" | "pie";
 type TooltipName = string | number;
+type BarSeriesKey = "desktop" | "mobile";
+type LineSeriesKey = "signups" | "activeUsers" | "revenue";
+
+const barSeries = [
+  { key: "desktop" as const, label: "Desktop", color: "#0f172a" },
+  { key: "mobile" as const, label: "Mobile", color: "#2563eb" },
+];
+
+const lineSeries = [
+  { key: "signups" as const, label: "Signups", color: "#2563eb" },
+  { key: "activeUsers" as const, label: "Active Users", color: "#14b8a6" },
+  { key: "revenue" as const, label: "Revenue", color: "#f59e0b" },
+];
 
 const tabs: { key: TabKey; label: string; description: string }[] = [
   {
@@ -72,6 +88,7 @@ type CustomTooltipEntry = {
   };
 };
 
+// Tab button for switching between chart types.
 function TabButton({
   active,
   controls,
@@ -105,6 +122,49 @@ function TabButton({
   );
 }
 
+// Clickable legend used to focus one series or slice at a time.
+function InteractiveLegend({
+  items,
+  selectedKey,
+  title,
+  onToggle,
+}: {
+  items: { key: string; label: string; color: string }[];
+  selectedKey: string | null;
+  title: string;
+  onToggle: (key: string) => void;
+}) {
+  return (
+    <div role="group" aria-label={title} className="mb-4 flex flex-wrap gap-2">
+      {items.map((item) => {
+        const isSelected = selectedKey === item.key;
+        const isDimmed = selectedKey !== null && !isSelected;
+
+        return (
+          <button
+            key={item.key}
+            type="button"
+            aria-pressed={isSelected}
+            onClick={() => onToggle(item.key)}
+            className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${
+              isSelected
+                ? "border-transparent bg-dark text-text-inverted"
+                : "border-border bg-white text-text-secondary hover:text-text-primary"
+            } ${isDimmed ? "opacity-55" : ""}`}
+          >
+            <span
+              className="h-2.5 w-2.5 rounded-full"
+              style={{ backgroundColor: item.color }}
+            />
+            <span>{item.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// Shared tooltip renderer with colored dots and rounded card styling.
 function CustomTooltip({
   active,
   label,
@@ -154,8 +214,14 @@ function CustomTooltip({
   );
 }
 
+// Main trick component that coordinates tabs, legends, and chart state.
 export default function BasicRecharts() {
   const [activeTab, setActiveTab] = useState<TabKey>("bar");
+  const [selectedBarSeries, setSelectedBarSeries] =
+    useState<BarSeriesKey | null>(null);
+  const [selectedLineSeries, setSelectedLineSeries] =
+    useState<LineSeriesKey | null>(null);
+  const [selectedPieSlice, setSelectedPieSlice] = useState<string | null>(null);
   const id = useId();
   const currentTab = tabs.find((tab) => tab.key === activeTab) ?? tabs[0];
   const tabPanelId = `${id}-${activeTab}-panel`;
@@ -211,92 +277,192 @@ export default function BasicRecharts() {
           </div>
 
           {activeTab === "bar" && (
-            <div className="h-[360px] w-full" aria-label="Bar chart demo">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={barData} barGap={10}>
-                  <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
-                  <XAxis dataKey="location" tickLine={false} axisLine={false} />
-                  <YAxis tickLine={false} axisLine={false} />
-                  <Tooltip content={(props) => <CustomTooltip {...props} />} />
-                  <Legend />
-                  <Bar
-                    dataKey="desktop"
-                    name="Desktop"
-                    fill="#0f172a"
-                    radius={[8, 8, 0, 0]}
-                  />
-                  <Bar
-                    dataKey="mobile"
-                    name="Mobile"
-                    fill="#2563eb"
-                    radius={[8, 8, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <>
+              <InteractiveLegend
+                title="Bar chart legend"
+                items={barSeries}
+                selectedKey={selectedBarSeries}
+                onToggle={(key) =>
+                  setSelectedBarSeries((current) =>
+                    current === key ? null : (key as BarSeriesKey),
+                  )
+                }
+              />
+              <div className="h-[360px] w-full" aria-label="Bar chart demo">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={barData} barGap={10}>
+                    <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="location"
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <YAxis tickLine={false} axisLine={false} />
+                    <Tooltip
+                      content={(props) => <CustomTooltip {...props} />}
+                    />
+                    <Bar
+                      dataKey="desktop"
+                      name="Desktop"
+                      fill="#0f172a"
+                      style={{ transition: "fill-opacity 240ms ease" }}
+                      fillOpacity={
+                        selectedBarSeries === null ||
+                        selectedBarSeries === "desktop"
+                          ? 1
+                          : 0.22
+                      }
+                      radius={[8, 8, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="mobile"
+                      name="Mobile"
+                      fill="#2563eb"
+                      style={{ transition: "fill-opacity 240ms ease" }}
+                      fillOpacity={
+                        selectedBarSeries === null ||
+                        selectedBarSeries === "mobile"
+                          ? 1
+                          : 0.22
+                      }
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </>
           )}
 
           {activeTab === "line" && (
-            <div className="h-[360px] w-full" aria-label="Line chart demo">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={lineData}>
-                  <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
-                  <XAxis dataKey="month" tickLine={false} axisLine={false} />
-                  <YAxis tickLine={false} axisLine={false} />
-                  <Tooltip content={(props) => <CustomTooltip {...props} />} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="signups"
-                    name="Signups"
-                    stroke="#2563eb"
-                    strokeWidth={3}
-                    dot={{ r: 4 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="activeUsers"
-                    name="Active Users"
-                    stroke="#14b8a6"
-                    strokeWidth={3}
-                    dot={{ r: 4 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="revenue"
-                    name="Revenue"
-                    stroke="#f59e0b"
-                    strokeWidth={3}
-                    dot={{ r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            <>
+              <InteractiveLegend
+                title="Line chart legend"
+                items={lineSeries}
+                selectedKey={selectedLineSeries}
+                onToggle={(key) =>
+                  setSelectedLineSeries((current) =>
+                    current === key ? null : (key as LineSeriesKey),
+                  )
+                }
+              />
+              <div className="h-[360px] w-full" aria-label="Line chart demo">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={lineData}>
+                    <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
+                    <XAxis dataKey="month" tickLine={false} axisLine={false} />
+                    <YAxis tickLine={false} axisLine={false} />
+                    <Tooltip
+                      content={(props) => <CustomTooltip {...props} />}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="signups"
+                      name="Signups"
+                      stroke="#2563eb"
+                      strokeWidth={3}
+                      style={{ transition: "stroke-opacity 240ms ease" }}
+                      strokeOpacity={
+                        selectedLineSeries === null ||
+                        selectedLineSeries === "signups"
+                          ? 1
+                          : 0.18
+                      }
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="activeUsers"
+                      name="Active Users"
+                      stroke="#14b8a6"
+                      strokeWidth={3}
+                      style={{ transition: "stroke-opacity 240ms ease" }}
+                      strokeOpacity={
+                        selectedLineSeries === null ||
+                        selectedLineSeries === "activeUsers"
+                          ? 1
+                          : 0.18
+                      }
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="revenue"
+                      name="Revenue"
+                      stroke="#f59e0b"
+                      strokeWidth={3}
+                      style={{ transition: "stroke-opacity 240ms ease" }}
+                      strokeOpacity={
+                        selectedLineSeries === null ||
+                        selectedLineSeries === "revenue"
+                          ? 1
+                          : 0.18
+                      }
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </>
           )}
 
           {activeTab === "pie" && (
-            <div className="h-[360px] w-full" aria-label="Pie chart demo">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    dataKey="value"
-                    nameKey="name"
-                    innerRadius={80}
-                    outerRadius={122}
-                    paddingAngle={1}
-                    shape={(props, index) => (
-                      <Sector
-                        {...props}
-                        fill={pieData[index]?.fill ?? props.fill}
-                      />
-                    )}
-                  />
-                  <Tooltip content={(props) => <CustomTooltip {...props} />} />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+            <>
+              <InteractiveLegend
+                title="Pie chart legend"
+                items={pieData.map((item) => ({
+                  key: item.name,
+                  label: item.name,
+                  color: item.fill,
+                }))}
+                selectedKey={selectedPieSlice}
+                onToggle={(key) =>
+                  setSelectedPieSlice((current) =>
+                    current === key ? null : key,
+                  )
+                }
+              />
+              <div className="h-[360px] w-full" aria-label="Pie chart demo">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      dataKey="value"
+                      nameKey="name"
+                      innerRadius={80}
+                      outerRadius={122}
+                      paddingAngle={1}
+                      shape={(props, index) => (
+                        <Sector
+                          {...props}
+                          style={{
+                            transition:
+                              "opacity 240ms ease, transform 240ms ease, d 240ms ease",
+                          }}
+                          outerRadius={
+                            selectedPieSlice === pieData[index]?.name
+                              ? 132
+                              : props.outerRadius
+                          }
+                          fill={pieData[index]?.fill ?? props.fill}
+                          opacity={
+                            selectedPieSlice === null ||
+                            selectedPieSlice === pieData[index]?.name
+                              ? 1
+                              : 0.28
+                          }
+                        />
+                      )}
+                    />
+                    <Tooltip
+                      content={(props) => <CustomTooltip {...props} />}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </>
           )}
         </div>
       </div>
