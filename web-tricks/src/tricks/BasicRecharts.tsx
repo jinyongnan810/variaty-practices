@@ -1,21 +1,23 @@
 import { useId, useState } from "react";
+import type { TooltipContentProps, TooltipValueType } from "recharts";
 import {
   Bar,
   BarChart,
   CartesianGrid,
-  Cell,
   Legend,
   Line,
   LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
+  Sector,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
 type TabKey = "bar" | "line" | "pie";
+type TooltipName = string | number;
 
 const tabs: { key: TabKey; label: string; description: string }[] = [
   {
@@ -53,13 +55,22 @@ const lineData = [
 ];
 
 const pieData = [
-  { name: "Direct", value: 38 },
-  { name: "Search", value: 27 },
-  { name: "Referral", value: 19 },
-  { name: "Social", value: 16 },
+  { name: "Direct", value: 38, fill: "#0f172a" },
+  { name: "Search", value: 27, fill: "#2563eb" },
+  { name: "Referral", value: 19, fill: "#14b8a6" },
+  { name: "Social", value: 16, fill: "#f59e0b" },
 ];
 
-const pieColors = ["#0f172a", "#2563eb", "#14b8a6", "#f59e0b"];
+type CustomTooltipEntry = {
+  color?: string;
+  fill?: string;
+  dataKey?: string | number;
+  name?: string | number;
+  value?: number | string | ReadonlyArray<number | string>;
+  payload?: {
+    fill?: string;
+  };
+};
 
 function TabButton({
   active,
@@ -91,6 +102,55 @@ function TabButton({
     >
       {label}
     </button>
+  );
+}
+
+function CustomTooltip({
+  active,
+  label,
+  payload,
+}: TooltipContentProps<TooltipValueType, TooltipName>) {
+  if (!active || !payload?.length) {
+    return null;
+  }
+
+  return (
+    <div className="min-w-[180px] rounded-2xl border border-border bg-white px-4 py-3 shadow-lg">
+      {label !== undefined && (
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-text-tertiary">
+          {label}
+        </p>
+      )}
+      <div className="flex flex-col gap-2">
+        {payload.map((entry, index) => {
+          const tooltipEntry = entry as CustomTooltipEntry;
+          const color =
+            tooltipEntry.color ??
+            tooltipEntry.fill ??
+            tooltipEntry.payload?.fill ??
+            "#0f172a";
+          const value = Array.isArray(tooltipEntry.value)
+            ? tooltipEntry.value.join(" / ")
+            : tooltipEntry.value;
+
+          return (
+            <div
+              key={`${tooltipEntry.dataKey ?? tooltipEntry.name ?? "item"}-${index}`}
+              className="flex items-center justify-between gap-4 text-sm"
+            >
+              <div className="flex items-center gap-2 text-text-secondary">
+                <span
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{ backgroundColor: color }}
+                />
+                <span>{tooltipEntry.name}</span>
+              </div>
+              <span className="font-semibold text-text-primary">{value}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -157,7 +217,7 @@ export default function BasicRecharts() {
                   <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
                   <XAxis dataKey="location" tickLine={false} axisLine={false} />
                   <YAxis tickLine={false} axisLine={false} />
-                  <Tooltip />
+                  <Tooltip content={(props) => <CustomTooltip {...props} />} />
                   <Legend />
                   <Bar
                     dataKey="desktop"
@@ -183,7 +243,7 @@ export default function BasicRecharts() {
                   <CartesianGrid stroke="#d4d4d8" strokeDasharray="3 3" />
                   <XAxis dataKey="month" tickLine={false} axisLine={false} />
                   <YAxis tickLine={false} axisLine={false} />
-                  <Tooltip />
+                  <Tooltip content={(props) => <CustomTooltip {...props} />} />
                   <Legend />
                   <Line
                     type="monotone"
@@ -224,16 +284,15 @@ export default function BasicRecharts() {
                     nameKey="name"
                     innerRadius={80}
                     outerRadius={122}
-                    paddingAngle={4}
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell
-                        key={entry.name}
-                        fill={pieColors[index % pieColors.length]}
+                    paddingAngle={1}
+                    shape={(props, index) => (
+                      <Sector
+                        {...props}
+                        fill={pieData[index]?.fill ?? props.fill}
                       />
-                    ))}
-                  </Pie>
-                  <Tooltip />
+                    )}
+                  />
+                  <Tooltip content={(props) => <CustomTooltip {...props} />} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
