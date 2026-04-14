@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { Suspense, lazy } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import GithubIcon from "../components/GithubIcon";
 import { tricks } from "../data/tricks";
 
@@ -9,9 +9,12 @@ const lazyComponents = Object.fromEntries(
 );
 
 export default function TrickDetail() {
+  const location = useLocation();
   const { id } = useParams<{ id: string }>();
   const trick = tricks.find((t) => t.id === id);
   const DemoComponent = id ? lazyComponents[id] : null;
+  const shouldRestoreGalleryScroll =
+    location.state?.restoreGalleryScroll === true;
 
   if (!trick || !DemoComponent) {
     return (
@@ -27,6 +30,7 @@ export default function TrickDetail() {
       <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-4 sm:px-6 lg:px-20 lg:py-5">
         <Link
           to="/"
+          state={{ restoreGalleryScroll: shouldRestoreGalleryScroll }}
           className="flex items-center gap-3 no-underline text-text-secondary transition-colors hover:text-text-primary"
         >
           <ArrowLeft size={20} className="text-text-primary" />

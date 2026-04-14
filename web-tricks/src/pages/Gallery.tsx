@@ -1,18 +1,39 @@
-import { useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
+import { useLocation } from "react-router";
 import TrickCard from "../components/TrickCard";
 import { tricks } from "../data/tricks";
 import type { Category } from "../App";
+
+const GALLERY_SCROLL_POSITION_KEY = "gallery-scroll-position";
 
 interface GalleryProps {
   filter: Category;
 }
 
 export default function Gallery({ filter }: GalleryProps) {
+  const location = useLocation();
   const filtered = useMemo(
     () =>
       filter === "All" ? tricks : tricks.filter((t) => t.category === filter),
     [filter],
   );
+
+  useLayoutEffect(() => {
+    if (location.state?.restoreGalleryScroll !== true) {
+      return;
+    }
+
+    const savedScrollPosition = window.sessionStorage.getItem(
+      GALLERY_SCROLL_POSITION_KEY,
+    );
+
+    if (!savedScrollPosition) {
+      return;
+    }
+
+    window.scrollTo({ top: Number(savedScrollPosition), left: 0 });
+    window.sessionStorage.removeItem(GALLERY_SCROLL_POSITION_KEY);
+  }, [location.key, location.state]);
 
   return (
     <main>
