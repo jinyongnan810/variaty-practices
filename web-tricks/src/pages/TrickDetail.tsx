@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useLayoutEffect } from "react";
 import { Link, useLocation, useParams } from "react-router";
 import GithubIcon from "../components/GithubIcon";
 import { tricks } from "../data/tricks";
@@ -15,6 +15,10 @@ export default function TrickDetail() {
   const DemoComponent = id ? lazyComponents[id] : null;
   const shouldRestoreGalleryScroll =
     location.state?.restoreGalleryScroll === true;
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [id]);
 
   if (!trick || !DemoComponent) {
     return (
