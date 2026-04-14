@@ -17,7 +17,7 @@ export default function TrickCard({ trick }: TrickCardProps) {
         <span className="sr-only">Open {trick.title}</span>
       </Link>
 
-      <div className="pointer-events-none w-full h-[220px] bg-card overflow-hidden">
+      <div className="pointer-events-none h-48 w-full overflow-hidden bg-card sm:h-[220px]">
         <img
           src={trick.thumbnail}
           alt={trick.title}
@@ -25,7 +25,7 @@ export default function TrickCard({ trick }: TrickCardProps) {
         />
       </div>
 
-      <div className="pointer-events-none flex flex-col gap-2.5 px-5 pt-4 pb-5">
+      <div className="pointer-events-none flex flex-col gap-2.5 px-4 pt-4 pb-5 sm:px-5">
         <div className="flex items-center justify-between">
           <span className="font-display text-[11px] font-semibold text-text-secondary bg-card px-2.5 py-1 rounded-full">
             {trick.category}
@@ -41,11 +41,11 @@ export default function TrickCard({ trick }: TrickCardProps) {
           </a>
         </div>
 
-        <h3 className="font-display text-lg font-bold text-text-primary tracking-tight m-0">
+        <h3 className="m-0 font-display text-base font-bold tracking-tight text-text-primary sm:text-lg">
           {trick.title}
         </h3>
 
-        <p className="font-body text-[13px] text-text-secondary leading-relaxed m-0">
+        <p className="m-0 font-body text-[13px] leading-relaxed text-text-secondary">
           {trick.description}
         </p>
       </div>

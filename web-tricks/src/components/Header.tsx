@@ -19,23 +19,33 @@ export default function Header({ filter, onFilterChange }: HeaderProps) {
   const isHome = location.pathname === "/";
 
   return (
-    <header className="flex items-center justify-between px-20 py-5 border-b border-border">
-      <Link
-        to="/"
-        className="flex items-center gap-3 no-underline"
-        onClick={() => onFilterChange("All")}
-      >
-        <div className="w-8 h-8 bg-dark rounded-lg flex items-center justify-center">
-          <span className="text-text-inverted font-display text-sm font-bold">
-            {"</>"}
+    <header className="flex flex-col gap-4 border-b border-border px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-20 lg:py-5">
+      <div className="flex items-center justify-between gap-4 lg:min-w-0">
+        <Link
+          to="/"
+          className="flex min-w-0 items-center gap-3 no-underline"
+          onClick={() => onFilterChange("All")}
+        >
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-dark">
+            <span className="font-display text-sm font-bold text-text-inverted">
+              {"</>"}
+            </span>
+          </div>
+          <span className="font-display text-xl font-extrabold tracking-tight text-text-primary">
+            Web Tricks
           </span>
-        </div>
-        <span className="font-display text-xl font-extrabold text-text-primary tracking-tight">
-          Web Tricks
-        </span>
-      </Link>
+        </Link>
+        <a
+          href="https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0 text-text-primary transition-colors hover:text-text-secondary"
+        >
+          <GithubIcon size={20} />
+        </a>
+      </div>
 
-      <nav className="flex items-center gap-8">
+      <nav className="flex w-full flex-wrap items-center gap-x-5 gap-y-3 lg:w-auto lg:justify-end lg:gap-8">
         {isHome &&
           categories.map((cat) => (
             <button
@@ -50,14 +60,6 @@ export default function Header({ filter, onFilterChange }: HeaderProps) {
               {cat.label}
             </button>
           ))}
-        <a
-          href="https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-text-primary hover:text-text-secondary transition-colors"
-        >
-          <GithubIcon size={20} />
-        </a>
       </nav>
     </header>
   );

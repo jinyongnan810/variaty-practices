@@ -17,22 +17,24 @@ export default function Gallery({ filter }: GalleryProps) {
   return (
     <main>
       {/* Hero */}
-      <section className="flex flex-col items-center px-20 pt-20 pb-16 gap-4">
-        <h1 className="font-display text-5xl font-black text-text-primary tracking-[-2px] text-center m-0">
+      <section className="flex flex-col items-center gap-4 px-4 pt-10 pb-10 sm:px-6 sm:pt-14 sm:pb-12 lg:px-20 lg:pt-20 lg:pb-16">
+        <h1 className="m-0 text-center font-display text-3xl font-black tracking-[-1px] text-text-primary sm:text-4xl lg:text-5xl lg:tracking-[-2px]">
           Tiny tricks, big impact.
         </h1>
-        <p className="font-body text-lg text-text-secondary text-center max-w-[600px] leading-relaxed m-0">
+        <p className="m-0 max-w-[600px] text-center font-body text-base leading-relaxed text-text-secondary sm:text-lg">
           A curated collection of CSS, JavaScript & React snippets you can learn
           in minutes.
         </p>
-        <div className="flex items-center gap-8 pt-6">
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-4 text-center sm:gap-6 lg:gap-8 lg:pt-6">
           <div className="flex items-center gap-1.5">
             <span className="font-display text-2xl font-black text-text-primary">
               {tricks.length}
             </span>
             <span className="font-body text-sm text-text-tertiary">tricks</span>
           </div>
-          <span className="text-2xl text-text-tertiary">·</span>
+          <span className="hidden text-2xl text-text-tertiary sm:inline">
+            ·
+          </span>
           <div className="flex items-center gap-1.5">
             <span className="font-display text-2xl font-black text-text-primary">
               3
@@ -41,7 +43,9 @@ export default function Gallery({ filter }: GalleryProps) {
               categories
             </span>
           </div>
-          <span className="text-2xl text-text-tertiary">·</span>
+          <span className="hidden text-2xl text-text-tertiary sm:inline">
+            ·
+          </span>
           <span className="font-body text-sm font-medium text-text-secondary">
             open source
           </span>
@@ -49,9 +53,9 @@ export default function Gallery({ filter }: GalleryProps) {
       </section>
 
       {/* Grid Section */}
-      <section className="px-20 pb-20 flex flex-col gap-8">
-        <div className="flex items-center justify-between">
-          <h2 className="font-display text-2xl font-extrabold text-text-primary tracking-tight m-0">
+      <section className="flex flex-col gap-6 px-4 pb-12 sm:px-6 sm:pb-16 lg:px-20 lg:pb-20">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="m-0 font-display text-xl font-extrabold tracking-tight text-text-primary sm:text-2xl">
             {filter === "All" ? "Browse Tricks" : filter}
           </h2>
           <span className="font-body text-sm text-text-tertiary">
@@ -59,7 +63,7 @@ export default function Gallery({ filter }: GalleryProps) {
           </span>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3 xl:gap-6">
           {filtered.map((trick) => (
             <TrickCard key={trick.id} trick={trick} />
           ))}
