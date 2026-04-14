@@ -8,11 +8,16 @@ interface TrickCardProps {
 
 export default function TrickCard({ trick }: TrickCardProps) {
   return (
-    <Link
-      to={`/trick/${trick.id}`}
-      className="group flex flex-col rounded-2xl border border-border bg-page overflow-hidden no-underline transition-shadow hover:shadow-lg"
-    >
-      <div className="w-full h-[220px] bg-card overflow-hidden">
+    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-page transition-shadow hover:shadow-lg">
+      <Link
+        to={`/trick/${trick.id}`}
+        aria-label={`Open ${trick.title}`}
+        className="absolute inset-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2"
+      >
+        <span className="sr-only">Open {trick.title}</span>
+      </Link>
+
+      <div className="pointer-events-none w-full h-[220px] bg-card overflow-hidden">
         <img
           src={trick.thumbnail}
           alt={trick.title}
@@ -20,7 +25,7 @@ export default function TrickCard({ trick }: TrickCardProps) {
         />
       </div>
 
-      <div className="flex flex-col gap-2.5 px-5 pt-4 pb-5">
+      <div className="pointer-events-none flex flex-col gap-2.5 px-5 pt-4 pb-5">
         <div className="flex items-center justify-between">
           <span className="font-display text-[11px] font-semibold text-text-secondary bg-card px-2.5 py-1 rounded-full">
             {trick.category}
@@ -29,8 +34,8 @@ export default function TrickCard({ trick }: TrickCardProps) {
             href={trick.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-tertiary hover:text-text-primary transition-colors"
-            onClick={(e) => e.stopPropagation()}
+            aria-label={`Open ${trick.title} source on GitHub`}
+            className="pointer-events-auto relative z-10 text-text-tertiary transition-colors hover:text-text-primary"
           >
             <GithubIcon size={18} />
           </a>
@@ -44,6 +49,6 @@ export default function TrickCard({ trick }: TrickCardProps) {
           {trick.description}
         </p>
       </div>
-    </Link>
+    </article>
   );
 }
