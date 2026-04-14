@@ -18,6 +18,7 @@ export interface Trick {
   technologies: string[];
   thumbnail: string;
   githubUrl: string;
+  fullscreenMode?: "fill" | "scale";
   component: () => Promise<{ default: ComponentType }>;
 }
 
@@ -32,6 +33,7 @@ const trickList: Trick[] = [
     thumbnail: rechartsThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/BasicRecharts.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/BasicRecharts"),
   },
   {
@@ -55,6 +57,7 @@ const trickList: Trick[] = [
     thumbnail: compositionSearchThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/CompositionSearch.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/CompositionSearch"),
   },
   {
@@ -67,6 +70,7 @@ const trickList: Trick[] = [
     thumbnail: glassmorphismThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/Glassmorphism.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/Glassmorphism"),
   },
   {
@@ -79,6 +83,7 @@ const trickList: Trick[] = [
     thumbnail: useLocalStorageThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/UseLocalStorage.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/UseLocalStorage"),
   },
   {
@@ -91,6 +96,7 @@ const trickList: Trick[] = [
     thumbnail: progressStepsThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ProgressSteps.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/ProgressSteps"),
   },
   {
@@ -490,6 +496,7 @@ const trickList: Trick[] = [
     thumbnail: scrollAnimationsThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ScrollAnimations.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/ScrollAnimations"),
   },
   {
@@ -502,6 +509,7 @@ const trickList: Trick[] = [
     thumbnail: intersectionObserverThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/IntersectionObserverDemo.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/IntersectionObserverDemo"),
   },
   {
@@ -514,6 +522,7 @@ const trickList: Trick[] = [
     thumbnail: optimisticUIThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/OptimisticUI.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/OptimisticUI"),
   },
   {
@@ -526,6 +535,7 @@ const trickList: Trick[] = [
     thumbnail: containerQueriesThumb,
     githubUrl:
       "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/ContainerQueries.tsx",
+    fullscreenMode: "scale",
     component: () => import("../tricks/ContainerQueries"),
   },
 ];
