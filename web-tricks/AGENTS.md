@@ -85,6 +85,8 @@ When adding a new trick, update all required touchpoints:
   - `playwright-report/`
   - `test-results/`
 - Add key comments for each created project to explain the trick's essential concepts.
+- When asked to add new trick. Add to the top of the tricks.
+- Add concise comments to functions and components.
 
 ## Testing And Validation
 

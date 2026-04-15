@@ -8,6 +8,7 @@ import optimisticUIThumb from "../assets/thumbnails/optimisticUIUpdates.png";
 import progressStepsThumb from "../assets/thumbnails/progressSteps.png";
 import rechartsThumb from "../assets/thumbnails/recharts.png";
 import scrollAnimationsThumb from "../assets/thumbnails/scrollDrivenAnimations.png";
+import segementedProgressRingThumb from "../assets/thumbnails/segmentedProgressRing.png";
 import useLocalStorageThumb from "../assets/thumbnails/useLocalStorage.png";
 
 export interface Trick {
@@ -23,6 +24,19 @@ export interface Trick {
 }
 
 const trickList: Trick[] = [
+  {
+    id: "segmented-progress-ring",
+    title: "Segmented Progress Ring",
+    description:
+      "Reusable SVG progress ring built from rounded arc paths with equal or weighted segments.",
+    category: "React",
+    technologies: ["React", "TypeScript", "SVG arcs", "animation"],
+    thumbnail: segementedProgressRingThumb,
+    githubUrl:
+      "https://github.com/jinyongnan810/variaty-practices/tree/main/web-tricks/src/tricks/SegmentedProgressRing.tsx",
+    fullscreenMode: "scale",
+    component: () => import("../tricks/SegmentedProgressRing"),
+  },
   {
     id: "basic-recharts",
     title: "Basic Recharts",
@@ -99,6 +113,7 @@ const trickList: Trick[] = [
     fullscreenMode: "scale",
     component: () => import("../tricks/ProgressSteps"),
   },
+
   {
     id: "blurry-loading",
     title: "Blurry Loading",
