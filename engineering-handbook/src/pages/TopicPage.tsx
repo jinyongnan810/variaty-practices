@@ -45,6 +45,17 @@ function TopicPage() {
     downloadTextFile("example.py", currentPage.pythonExample);
   }
 
+  const neutralActionClass =
+    "inline-flex min-h-14 appearance-none items-center justify-center rounded-full border border-border bg-white/70 px-5 py-3 text-center font-body text-sm font-semibold leading-none tracking-normal transition hover:bg-panel/55";
+  const primaryActionClass =
+    "inline-flex min-h-14 items-center justify-center rounded-full bg-accent px-5 py-3 text-center font-body text-sm font-semibold leading-none tracking-normal text-white transition hover:opacity-90";
+  const dangerActionClass =
+    "inline-flex min-h-14 appearance-none items-center justify-center rounded-full border border-red-300 bg-red-50 px-5 py-3 text-center font-body text-sm font-semibold leading-none tracking-normal text-red-700 transition hover:bg-red-100";
+  const actionTextStyle = {
+    fontFamily: 'var(--font-body)',
+    fontWeight: 600,
+  } as const;
+
   return (
     <>
       <SiteHeader />
@@ -70,16 +81,14 @@ function TopicPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/"
-              className="rounded-full border border-border bg-white/70 px-5 py-3 text-sm font-semibold transition hover:bg-panel/55"
-            >
+            <Link to="/" className={neutralActionClass} style={actionTextStyle}>
               Back Home
             </Link>
             <LocalOnly>
               <Link
                 to={`/local/edit?slug=${currentPage.slug}`}
-                className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+                className={primaryActionClass}
+                style={actionTextStyle}
               >
                 Edit in Local Editor
               </Link>
@@ -88,7 +97,8 @@ function TopicPage() {
               <button
                 type="button"
                 onClick={exportCurrentFiles}
-                className="rounded-full border border-border bg-white/70 px-5 py-3 text-sm font-semibold transition hover:bg-panel/55"
+                className={neutralActionClass}
+                style={actionTextStyle}
               >
                 Export Files
               </button>
@@ -97,7 +107,8 @@ function TopicPage() {
               <button
                 type="button"
                 onClick={() => setShowDeleteHelp((current) => !current)}
-                className="rounded-full border border-red-300 bg-red-50 px-5 py-3 text-sm font-semibold text-red-700 transition hover:bg-red-100"
+                className={dangerActionClass}
+                style={actionTextStyle}
               >
                 Delete Help
               </button>
