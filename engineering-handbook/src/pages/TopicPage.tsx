@@ -1,29 +1,144 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router";
+import LocalOnly from "../components/LocalOnly";
+import MarkdownSection from "../components/MarkdownSection";
+import PythonSection from "../components/PythonSection";
+import SiteHeader from "../components/SiteHeader";
+import { getPageBySlug } from "../data/contentLoader";
+import { downloadTextFile } from "../utils/download";
 
 function TopicPage() {
   const { slug } = useParams();
+  const page = slug ? getPageBySlug(slug) : null;
+  const [showDeleteHelp, setShowDeleteHelp] = useState(false);
+
+  if (!page) {
+    return (
+      <>
+        <SiteHeader />
+        <main className="mx-auto w-full max-w-5xl px-6 py-10 sm:px-8 lg:px-12">
+          <section className="rounded-[28px] border border-border/80 bg-surface/90 p-8">
+            <p className="text-sm font-medium uppercase tracking-[0.24em] text-accent">
+              Topic Not Found
+            </p>
+            <h1 className="mt-4 font-display text-3xl font-bold tracking-tight">
+              That handbook page does not exist.
+            </h1>
+            <Link
+              to="/"
+              className="mt-8 inline-flex rounded-full border border-border bg-white/70 px-5 py-3 text-sm font-semibold"
+            >
+              Back Home
+            </Link>
+          </section>
+        </main>
+      </>
+    );
+  }
+
+  const currentPage = page;
+
+  function exportCurrentFiles() {
+    downloadTextFile("why-it-matters.md", currentPage.whyItMatters);
+    downloadTextFile("learning-goals.md", currentPage.learningGoals);
+    downloadTextFile("learning-memo.md", currentPage.learningMemo);
+    downloadTextFile("example.py", currentPage.pythonExample);
+  }
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-6 py-10 sm:px-8 lg:px-12">
-      <div className="rounded-[28px] border border-border/80 bg-surface/90 p-8 shadow-[0_24px_80px_rgba(68,49,22,0.08)] backdrop-blur sm:p-10">
-        <p className="text-sm font-medium uppercase tracking-[0.24em] text-accent">
-          Topic Route Stub
-        </p>
-        <h1 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-          {slug ?? "Unknown topic"}
-        </h1>
-        <p className="mt-4 max-w-2xl leading-7 text-text-secondary">
-          This route is ready for the generated handbook content model and
-          markdown sections.
-        </p>
-        <Link
-          to="/"
-          className="mt-8 inline-flex w-fit items-center rounded-full border border-border bg-white/70 px-5 py-3 text-sm font-semibold text-text-primary transition hover:bg-panel/60"
-        >
-          Back Home
-        </Link>
-      </div>
-    </main>
+    <>
+      <SiteHeader />
+      <main className="mx-auto flex w-full max-w-5xl flex-col px-6 py-10 sm:px-8 lg:px-12">
+        <section className="rounded-[32px] border border-border/80 bg-surface/90 p-8 shadow-[0_24px_80px_rgba(68,49,22,0.08)]">
+          <div className="flex flex-wrap gap-2">
+            {currentPage.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-accent"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl">
+            {currentPage.title}
+          </h1>
+
+          <p className="mt-4 text-sm font-medium uppercase tracking-[0.24em] text-text-secondary">
+            {currentPage.area}
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              to="/"
+              className="rounded-full border border-border bg-white/70 px-5 py-3 text-sm font-semibold transition hover:bg-panel/55"
+            >
+              Back Home
+            </Link>
+            <LocalOnly>
+              <Link
+                to={`/local/edit?slug=${currentPage.slug}`}
+                className="rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+              >
+                Edit in Local Editor
+              </Link>
+            </LocalOnly>
+            <LocalOnly>
+              <button
+                type="button"
+                onClick={exportCurrentFiles}
+                className="rounded-full border border-border bg-white/70 px-5 py-3 text-sm font-semibold transition hover:bg-panel/55"
+              >
+                Export Files
+              </button>
+            </LocalOnly>
+            <LocalOnly>
+              <button
+                type="button"
+                onClick={() => setShowDeleteHelp((current) => !current)}
+                className="rounded-full border border-red-300 bg-red-50 px-5 py-3 text-sm font-semibold text-red-700 transition hover:bg-red-100"
+              >
+                Delete Help
+              </button>
+            </LocalOnly>
+          </div>
+
+          <LocalOnly>
+            {showDeleteHelp ? (
+              <div className="mt-6 rounded-[24px] border border-red-200 bg-red-50 p-5 text-sm leading-7 text-red-900">
+                Delete this page manually from the repo:
+                <div className="mt-3 rounded-2xl bg-white/70 px-4 py-3 font-mono text-xs text-red-900">
+                  content/{currentPage.folder}
+                </div>
+                <p className="mt-3">
+                  Also remove the corresponding entry from{" "}
+                  <code>content/index.json</code>, or rerun the generator if you
+                  want to regenerate clean starter content.
+                </p>
+              </div>
+            ) : null}
+          </LocalOnly>
+        </section>
+
+        <div className="mt-8 grid gap-6">
+          <MarkdownSection
+            title="Why It Matters"
+            markdown={currentPage.whyItMatters}
+            accent="green"
+          />
+          <MarkdownSection
+            title="Learning Goals"
+            markdown={currentPage.learningGoals}
+          />
+          <MarkdownSection
+            title="Learning Memo"
+            markdown={currentPage.learningMemo}
+          />
+          <PythonSection code={currentPage.pythonExample} />
+        </div>
+      </main>
+    </>
   );
 }
 
