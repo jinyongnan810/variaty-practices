@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Link, useParams } from "react-router";
+import { useLayoutEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router";
 import LocalOnly from "../components/LocalOnly";
 import MarkdownSection from "../components/MarkdownSection";
 import PythonSection from "../components/PythonSection";
 import SiteHeader from "../components/SiteHeader";
 import { getPageBySlug } from "../data/contentLoader";
 import { downloadTextFile } from "../utils/download";
+
+const HOME_SCROLL_POSITION_KEY = "home-scroll-position";
 
 function BackIcon() {
   return (
@@ -25,14 +27,24 @@ function BackIcon() {
 }
 
 function TopicPage() {
+  const location = useLocation();
   const { slug } = useParams();
   const page = slug ? getPageBySlug(slug) : null;
   const [showDeleteHelp, setShowDeleteHelp] = useState(false);
+  const shouldRestoreHomeScroll = location.state?.restoreHomeScroll === true;
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [slug]);
 
   if (!page) {
     return (
       <>
-        <SiteHeader />
+        <SiteHeader
+          titleHref="/"
+          titleState={{ restoreHomeScroll: shouldRestoreHomeScroll }}
+          titleAriaLabel="Back to home"
+        />
         <main className="mx-auto w-full max-w-5xl px-6 py-10 sm:px-8 lg:px-12">
           <section className="rounded-[28px] border border-border/80 bg-surface/90 p-8">
             <p className="text-sm font-medium uppercase tracking-[0.24em] text-accent">
@@ -43,8 +55,19 @@ function TopicPage() {
             </h1>
             <Link
               to="/"
+              state={{ restoreHomeScroll: shouldRestoreHomeScroll }}
               aria-label="Back to home"
               className="mt-8 inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-white/70 text-text-primary transition hover:bg-panel/55"
+              onClick={() => {
+                if (!shouldRestoreHomeScroll) {
+                  return;
+                }
+
+                window.sessionStorage.setItem(
+                  HOME_SCROLL_POSITION_KEY,
+                  String(window.scrollY),
+                );
+              }}
             >
               <BackIcon />
             </Link>
@@ -76,7 +99,11 @@ function TopicPage() {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader
+        titleHref="/"
+        titleState={{ restoreHomeScroll: shouldRestoreHomeScroll }}
+        titleAriaLabel="Back to home"
+      />
       <main className="mx-auto flex w-full max-w-5xl flex-col px-6 py-10 sm:px-8 lg:px-12">
         <section className="rounded-[32px] border border-border/80 bg-surface/90 p-8 shadow-[0_24px_80px_rgba(68,49,22,0.08)]">
           <div className="flex flex-wrap gap-2">

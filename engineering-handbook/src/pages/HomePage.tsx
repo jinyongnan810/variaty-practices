@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import { useLocation } from "react-router";
 import SiteHeader from "../components/SiteHeader";
 import TagFilter from "../components/TagFilter";
 import TopicCard from "../components/TopicCard";
@@ -6,8 +7,10 @@ import { getAllPageMetas } from "../data/contentLoader";
 import { TAGS, type HandbookTag } from "../data/types";
 
 const allPages = getAllPageMetas();
+const HOME_SCROLL_POSITION_KEY = "home-scroll-position";
 
 function HomePage() {
+  const location = useLocation();
   const [selectedTag, setSelectedTag] = useState<HandbookTag | "all">("all");
 
   const filteredPages =
@@ -24,6 +27,23 @@ function HomePage() {
     },
     {} as Record<HandbookTag, number>,
   );
+
+  useLayoutEffect(() => {
+    if (location.state?.restoreHomeScroll !== true) {
+      return;
+    }
+
+    const savedScrollPosition = window.sessionStorage.getItem(
+      HOME_SCROLL_POSITION_KEY,
+    );
+
+    if (!savedScrollPosition) {
+      return;
+    }
+
+    window.scrollTo({ top: Number(savedScrollPosition), left: 0 });
+    window.sessionStorage.removeItem(HOME_SCROLL_POSITION_KEY);
+  }, [location.key, location.state]);
 
   return (
     <>
