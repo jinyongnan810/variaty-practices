@@ -75,11 +75,6 @@ function TopicPage() {
           <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl">
             {currentPage.title}
           </h1>
-
-          <p className="mt-4 text-sm font-medium uppercase tracking-[0.24em] text-text-secondary">
-            {currentPage.area}
-          </p>
-
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/" className={neutralActionClass} style={actionTextStyle}>
               Back Home

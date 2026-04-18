@@ -9,18 +9,9 @@ function SiteHeader() {
           <p className="text-xs font-semibold uppercase tracking-[0.26em] text-accent">
             Engineering Handbook
           </p>
-          <p className="mt-1 truncate font-display text-lg font-bold tracking-tight">
-            Study pages for math, algebra, algorithms, and statistics
-          </p>
         </Link>
 
         <nav className="flex items-center gap-3 text-sm font-medium text-text-secondary">
-          <Link
-            to="/"
-            className="rounded-full border border-border bg-white/60 px-4 py-2 transition hover:bg-panel/55"
-          >
-            Library
-          </Link>
           <LocalOnly>
             <Link
               to="/local/edit"

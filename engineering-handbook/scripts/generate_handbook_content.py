@@ -133,7 +133,6 @@ def main() -> int:
             {
                 "slug": slug,
                 "title": topic["title"],
-                "area": topic["area"],
                 "tags": tags,
                 "folder": f"pages/{slug}",
             }

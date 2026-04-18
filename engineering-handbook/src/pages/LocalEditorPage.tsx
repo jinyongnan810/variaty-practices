@@ -15,7 +15,6 @@ import { slugify } from "../utils/slug";
 
 type EditorDraft = {
   title: string;
-  area: string;
   tags: HandbookTag[];
   whyItMatters: string;
   learningGoals: string;
@@ -31,7 +30,6 @@ function buildDraft(page: HandbookPageContent | null): EditorDraft {
   if (!page) {
     return {
       title: "",
-      area: "",
       tags: [],
       whyItMatters: "",
       learningGoals: "",
@@ -42,7 +40,6 @@ function buildDraft(page: HandbookPageContent | null): EditorDraft {
 
   return {
     title: page.title,
-    area: page.area,
     tags: page.tags,
     whyItMatters: page.whyItMatters,
     learningGoals: page.learningGoals,
@@ -84,7 +81,6 @@ function EditorForm({ initialPage }: EditorFormProps) {
         {
           slug: pageSlug,
           title: draft.title,
-          area: draft.area,
           tags: draft.tags,
         },
         null,
@@ -110,20 +106,12 @@ function EditorForm({ initialPage }: EditorFormProps) {
 
       <div className="mt-8 grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <section className="space-y-6 rounded-[28px] border border-border/80 bg-white/80 p-6 shadow-[0_20px_60px_rgba(68,49,22,0.05)]">
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4">
             <label className="flex flex-col gap-2 text-sm font-medium">
               Title
               <input
                 value={draft.title}
                 onChange={(event) => updateField("title", event.target.value)}
-                className="rounded-2xl border border-border bg-surface px-4 py-3 outline-none transition focus:border-accent"
-              />
-            </label>
-            <label className="flex flex-col gap-2 text-sm font-medium">
-              Area
-              <input
-                value={draft.area}
-                onChange={(event) => updateField("area", event.target.value)}
                 className="rounded-2xl border border-border bg-surface px-4 py-3 outline-none transition focus:border-accent"
               />
             </label>

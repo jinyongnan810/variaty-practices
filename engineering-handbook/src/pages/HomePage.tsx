@@ -30,9 +30,6 @@ function HomePage() {
       <SiteHeader />
       <main className="mx-auto flex w-full max-w-6xl flex-col px-6 py-10 sm:px-8 lg:px-12">
         <section className="rounded-[32px] border border-border/80 bg-surface/90 p-8 shadow-[0_24px_80px_rgba(68,49,22,0.08)] backdrop-blur sm:p-10">
-          <p className="text-sm font-medium uppercase tracking-[0.24em] text-accent">
-            Static Study Library
-          </p>
           <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl">
             Learn core engineering fundamentals through concise, practical topic
             pages.
@@ -42,15 +39,6 @@ function HomePage() {
             applied math, with clear explanations, study notes, and small Python
             examples collected in one place.
           </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-4 text-sm font-medium text-text-secondary">
-            <span className="rounded-full border border-border bg-white/70 px-4 py-2">
-              {allPages.length} total topics
-            </span>
-            <span className="rounded-full border border-border bg-white/70 px-4 py-2">
-              4 tag groups
-            </span>
-          </div>
 
           <div className="mt-8">
             <TagFilter

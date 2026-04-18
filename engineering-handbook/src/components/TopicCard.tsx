@@ -25,12 +25,6 @@ function TopicCard({ page }: TopicCardProps) {
       <h2 className="mt-4 font-display text-2xl font-bold tracking-tight transition group-hover:text-accent">
         {page.title}
       </h2>
-
-      <p className="mt-3 text-sm font-medium uppercase tracking-[0.22em] text-text-secondary">
-        {page.area}
-      </p>
-
-      <p className="mt-6 text-sm font-semibold text-accent">Open topic</p>
     </Link>
   );
 }

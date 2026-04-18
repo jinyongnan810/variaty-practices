@@ -5,7 +5,6 @@ export type HandbookTag = (typeof TAGS)[number];
 export type HandbookPageMeta = {
   slug: string;
   title: string;
-  area: string;
   tags: HandbookTag[];
   folder: string;
 };
