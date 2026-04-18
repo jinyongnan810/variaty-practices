@@ -7,6 +7,23 @@ import SiteHeader from "../components/SiteHeader";
 import { getPageBySlug } from "../data/contentLoader";
 import { downloadTextFile } from "../utils/download";
 
+function BackIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  );
+}
+
 function TopicPage() {
   const { slug } = useParams();
   const page = slug ? getPageBySlug(slug) : null;
@@ -26,9 +43,10 @@ function TopicPage() {
             </h1>
             <Link
               to="/"
-              className="mt-8 inline-flex rounded-full border border-border bg-white/70 px-5 py-3 text-sm font-semibold"
+              aria-label="Back to home"
+              className="mt-8 inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-white/70 text-text-primary transition hover:bg-panel/55"
             >
-              Back Home
+              <BackIcon />
             </Link>
           </section>
         </main>
@@ -52,7 +70,7 @@ function TopicPage() {
   const dangerActionClass =
     "inline-flex min-h-14 appearance-none items-center justify-center rounded-full border border-red-300 bg-red-50 px-5 py-3 text-center font-body text-sm font-semibold leading-none tracking-normal text-red-700 transition hover:bg-red-100";
   const actionTextStyle = {
-    fontFamily: 'var(--font-body)',
+    fontFamily: "var(--font-body)",
     fontWeight: 600,
   } as const;
 
@@ -76,9 +94,6 @@ function TopicPage() {
             {currentPage.title}
           </h1>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/" className={neutralActionClass} style={actionTextStyle}>
-              Back Home
-            </Link>
             <LocalOnly>
               <Link
                 to={`/local/edit?slug=${currentPage.slug}`}
